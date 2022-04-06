@@ -34,9 +34,9 @@ global.setFfmpegPath = true
 
 
 // Other
-global.ownerNumber = '6285161422971'   // Owner Bot, You can change to your phone number without "+" and "-"
+global.ownerNumber = '6281515589573'   // Owner Bot, You can change to your phone number without "+" and "-"
 global.ownerName = 'Cakra Yp'   // Owner name
-global.BotName = 'CAKRA BOT'   // Bot Name
+global.BotName = 'R-BOT'   // Bot Name
 global.prefix = '/'   // Set prefix command
 global.language = 'all'  //  You can change this language for all text with "all" --> ['id', 'en', 'all']
 global.BotImage = fs.readFileSync('./file/img/CakraBot.png')  //  You can change this bot images  <Buffer>
@@ -45,9 +45,13 @@ global.apiCakra = 'https://cakrayp.herokuapp.com'
 global.apikeyCakra = 'cakrayp24Q6'
 global.website = 'https://cakrajihan.wordpress.com/'
 global.qrcode_donate = ''
+/*global.simbol = '├'
+global.simbol1 = '│'
+global.simbol2 = '┌──'
+global.simbol3 '「'*/
 global.not_ppuser = fs.readFileSync('./file/img/no_ppuser.jpeg')  // You can change this image <Buffer>, if it user isn't using profile picture.
-global.lib_package = '@adiwajshing/baileys-md (multi-device)'  // Package name Type for library
-global.author = 'Cakrayp'  // Author name
+global.lib_package = 'R-BOT WHATSAPP ITS THE BEST'  // Package name Type for library
+global.author = 'RamaGans⁷⁶'  // Author name
 global.messageHandler = {
     error: {
       ind: "Mohon maaf fitur ini sedang *Error*, Silahkan dicoba lagi nanti atau dicoba yang lain.",
@@ -55,7 +59,7 @@ global.messageHandler = {
     },
     wait: {
       ind: "Mohon ditunggu dalam proses...",
-      eng: "Waiting for Process..."
+      eng: " Wait.       ..."
     },
     owner_bot: {
       eng: "This Command can be use Only for Owner.",
