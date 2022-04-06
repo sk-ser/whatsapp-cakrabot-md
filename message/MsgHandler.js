@@ -642,58 +642,215 @@ module.exports = async (cakrayp, store, msg) => {
                     image: botProfile
                 })
                 break;
-            case 'cmd':
-                if (isGroup) var link_gro = language_text(`Jika ingin bergabungn\n├ Silahkan ketik *${prefix}linkbotgc*`, `if you want to join\n├ please type *${prefix}linkbotgc*`)
+case 'command':
+let sectionnya= [{
+								"title": "GRUP FITUR",
+								"rows": [
+									{
+										"title": "Grup Fitur",
+										"description": "Menampilkan Fitur Grup",
+										"rowId": `${prefix}menugroup`
+									}
+								]
+							},
+							{
+								"title": "Bot Menu 🔎",
+								"rows": [
+									{
+										"title": "ALL Fitur",
+										"description": "Menampilkan Semua Fitur!",
+										"rowId": `${prefix}allmenu`
+									},
+									{
+										"title": "Download Fitur",
+										"description": "Menampilkan Download Menu",
+										"rowId": `${prefix}menudownloader`
+									},
+									{
+										"title": "Anime Fitur]",
+										"description": "Menampilkan Anime Fitur",
+										"rowId": `${prefix}menuanime`
+									},
+									{
+										"title": "informasi Fitur",
+										"description": "Menampilkan informasi Fitur",
+										"rowId": `${prefix}menuinformasi`
+										},
+										{
+											"title": "Randomtext",
+										"description": "Menampilkan randomtext Fitur",
+										"rowId": `${prefix}menurandomtext`
+										},
+										{
+											"title": "Entertaiment Fitur",
+										"description": "Menampilkan Entertaiment Fitur",
+										"rowId": `${prefix}menuentertaiment`
+										},
+										{
+										"title": "primbon Fitur",
+										"description": "Menampilkan Primbon Fitur",
+										"rowId": `${prefix}menuprimbon`
+										},
+										{
+											"title": "Convert Fitur",
+										"description": "Menampilkan Convert Fitur",
+										"rowId": `${prefix}menuconverter`
+										},
+										{
+										"title": "Creator Menu",
+										"description": "Menampilkan Creator Fitur",
+										"rowId": `${prefix}menucreator`
+										},
+										{
+											"title": "Search Fitur",
+										"description": "Menampilkan Search Fitur",
+										"rowId": `${prefix}menusearching`
+										},
+										{
+											"title": "TextPro Fitur",
+										"description": "Menampilkan TextPro Fitur",
+										"rowId": `${prefix}menutextpro`
+										},
+										{
+											"title": "Admin Fitur",
+										"description": "Menampilkan admin Fitur",
+										"rowId": `${prefix}menuadmin`
+										},
+										{
+										"title": "Media Menu",
+										"description": "menampilkan media fitur",
+										"rowId": `${prefix}menumedia`
+										},
+										{
+										"title": "Google Fitur",
+										"description": "menampilkan google menu",
+										"rowId": `${prefix}menugoogle`
+										},
+										{
+							     		"title": "Menu islamic",
+										"description": "Menampilkan islam Fitur ",
+										"rowId": `${prefix}menuislamic`
+										},
+								        {
+										"title": "Random Image",
+										"description": "menampilkan Fitur image ",
+										"rowId": `${prefix}menurandomimg`
+										}
+								]
+							},						 
+							{
+								"title": "About Bot",
+								"rows": [
+									{
+										"title": "Donasi",
+										"description": "Jika ingin masukkan bot ke grup harap donasi dahulu",
+										"rowId": `${prefix}donate`
+									},
+									{
+										"title": "Mensos",
+										"description": "menampilkan info mensos owner",
+										"rowId": `${prefix}socialmedia`
+									},
+									{
+										"title": "Infobot",
+										"description": "menampilkan Informasi Bot",
+										"rowId": `${prefix}infobot`
+									},
+									{
+										"title": "about bot",
+										"description": "menampilkan Informasi Bot",
+										"rowId": `${prefix}aboutbot`
+									},
+									{
+										"title": "Ping",
+										"description": "menampilkan Kecepatan Bot",
+										"rowId": `${prefix}ping`
+									},
+									{
+										"title": "Owner",
+										"description": "menampilkan contact pemilik bot",
+										"rowId": `${prefix}owner`
+									}
+								]
+							},
+							{
+								"title": "Owner Command",
+								"rows": [
+									{
+										"title": "Owner Fitur",
+										"description": "menampilkan Owner Fitur",
+										"rowId": `${prefix}menuowner`
+									}
+								]
+							},
+							{
+								"title": "Help",
+								"rows": [
+									{
+										"title": "helpbot",
+										"description": "menampilkan bantuan bot !!",
+										"rowId": `${prefix}helpbot`
+									}
+								]
+							}
+						]
+hisoka.sendList(m.chat, `Halo ${pushname}`, `BOT MENU
+
+LIBRAY:  *BAILEYS MD*`, "R-BOT", "CLICK HERE ", sectionnya, { quoted: m})
+break                
+/*       
+                 case 'cmd':
+                if (isGroup) var link_gro = language_text(`Jika ingin bergabungn\n┠❂ Silahkan ketik *${prefix}linkbotgc*`, `if you want to join\n┠❂ please type *${prefix}linkbotgc*`)
                 menunya = `
-┌─「 MENU COMMAND 」
+┏━「 MENU COMMAND 」
 │ 
-├• *Name :* ${Bot_Name}
-├• *Owner :* wa.me/${ownerNumber}
-├• *Lib :* @adiwajshing/baileys-md
-├• *Rest Api :* ${RestApi}
-├• *Github :* https://github.com/cakrayp
+┠❂• *Name :* ${Bot_Name}
+┠❂• *Owner :* wa.me/${ownerNumber}
+┠❂• *Lib :* @adiwajshing/baileys-md
+┠❂• *Rest Api :* ${RestApi}
+┠❂• *Github :* https://github.com/rasssya76
 │
-├• *Prefix :* \`\`\`"${multi ? '(multi)' : prefix}"\`\`\`
+┠❂• *Prefix :* \`\`\`"${multi ? '(multi)' : prefix}"\`\`\`
 │
-├─ *#LIST MENU*
-├• *${prefix}menuislamic*
-├• *${prefix}menudownloader*
-├• *${prefix}menuconverter*
-├• *${prefix}menusearching*
-├• *${prefix}menurandomtext*
-├• *${prefix}menuanime*
-├• *${prefix}menumedia*
-├• *${prefix}menuinformasi*
-├• *${prefix}menuentertaiment*
-├• *${prefix}menucreator*
-├• *${prefix}menugoogle*
-├• *${prefix}menuprimbon*
-├• *${prefix}menutextpro*
-├• *${prefix}menurandomimg*
-├• *${prefix}menugroup*
-├• *${prefix}menuadmin*
-├• *${prefix}menuowner*
-├• *${prefix}helpbot* [Command menu options]
+┠❂━ *#LIST MENU*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}* [Command menu options]
 │
-├─ *#ABOUT BOT*
-├• *${prefix}donate*
-├• *${prefix}owner*
-├• *${prefix}socialmedia*
-├• *${prefix}aboutbot*
-├• *${prefix}runtime*
-├• *${prefix}ping*
-├• *${prefix}infobot*
-├• *${prefix}tos*
+┠❂━ *#ABOUT BOT*
+┠❂• *${prefix}*
+┠❂• *${prefix}owner*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}runtime*
+┠❂• *${prefix}*
+┠❂• *${prefix}*
+┠❂• *${prefix}tos*
 │
-├ *#Note*
-├ ${language_text(`Jangan lupa dibaca dengan\n├ ketik *${prefix}rules*`, `Don't forget to\n├ read in *${prefix}rules*`)}
-├ ${link_gro ? link_gro : language_text(`Jika ingin bergabung\n├ Silahkan ketik *${prefix}linkbotgc*`, `if you want to join\n├ please type *${prefix}linkbotgc*`)}
+┠❂ *#Note*
+┠❂ ${language_text(`Jangan lupa dibaca dengan\n┠❂ ketik *${prefix}rules*`, `Don't forget to\n┠❂ read in *${prefix}rules*`)}
+┠❂ ${link_gro ? link_gro : language_text(`Jika ingin bergabung\n┠❂ Silahkan ketik *${prefix}linkbotgc*`, `if you want to join\n┠❂ please type *${prefix}linkbotgc*`)}
 │
 │
-├• *Runtime*
-├ ${language_text(runtime(process.uptime()), await translate(runtime(process.uptime())))}
+┠❂• *Runtime*
+┠❂ ${language_text(runtime(process.uptime()), await translate(runtime(process.uptime())))}
 │
-└──「 ${Bot_Name} 」
+┗━━「 ${Bot_Name} 」
 `.trim()
                 cakrayp.sendMessage(from, {
                     caption: menunya,
@@ -708,6 +865,7 @@ module.exports = async (cakrayp, store, msg) => {
                     contextInfo: { mentionedJid: [sender] }
                 })
                 break
+*/
             case 'allmenu':
                 cakrayp.sendMessage(from, {
                     caption: allmenu(pushname, isIndonesian, language, Clockset.swichtime(moment(new Date()).format('HH')), time, prefix),
@@ -950,7 +1108,7 @@ module.exports = async (cakrayp, store, msg) => {
                 break
             // Uptime Bot
             case 'runtime':
-                txt_checkUptime = `── *「 BOT UPTIME 」* ──\n\n`
+                txt_checkUptime = `━━ *「 BOT UPTIME 」* ━━\n\n`
                 txt_checkUptime += `❏ ${language_text(runtime(process.uptime()), await translate(runtime(process.uptime())))}\n\n`
                 txt_checkUptime += `© Made by ${author}`
                 reply(txt_checkUptime)
@@ -965,20 +1123,20 @@ Jangan lupa follow akun mimin iya,
 don't forget to follow my account
 :)
 
-┌─「 Social Media 」
+┏━「 Social Media 」
 │
-├ • *Website :*
-├ https://cakrajihan.wordpress.com
-├ • *Blogger :*
-├ https://cakraypjhn.blogspot.com
-├ • *Rest API :*
-├ ${apiCakra}
-├ • *Instagram :*
-├ https://instagram.com/cakrayp_jhn
-├ • *TeleBot :*
-├ https://t.me/Information341_bot
+┠❂ • *Website :*
+┠❂ https://cakrajihan.wordpress.com
+┠❂ • *Blogger :*
+┠❂ https://cakraypjhn.blogspot.com
+┠❂ • *Rest API :*
+┠❂ ${apiCakra}
+┠❂ • *Instagram :*
+┠❂ https://instagram.com/rasssya766
+┠❂ • *TeleBot :*
+┠❂ https://t.me/Information341_bot
 │
-└──「 ${Bot_Name} 」
+┗━━「 ${Bot_Name} 」
 `.trim()
                 cakrayp.sendMessage(from, {
                     image: botProfile,
@@ -1182,14 +1340,14 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 var group_data_tagall = await cakrayp.groupMetadata(from)
                 var participants_ = group_data_tagall.participants
                 txt_tagged = messagesText ? `*Message :* ${messagesText}\n\n` : ''
-                txt_tagged += '┌──「 Mention ALL 」\n'
-                txt_tagged += `├ Totally : ${participants_.length}\n│\n`
+                txt_tagged += '┏━━「 Mention ALL 」\n'
+                txt_tagged += `┠❂ Totally : ${participants_.length}\n│\n`
                 var arr_mem = []
                 for (let mem of participants_) {
-                    txt_tagged += `├➢ @${mem.id.split('@')[0]}\n`
+                    txt_tagged += `┠❂➢ @${mem.id.split('@')[0]}\n`
                     arr_mem.push(mem.id)
                 }
-                txt_tagged += `│\n└──「 ${Bot_Name} 」`
+                txt_tagged += `│\n┗━━「 ${Bot_Name} 」`
                 cakrayp.sendMessage(from, {
                     text: txt_tagged,
                     contextInfo: {
@@ -1203,14 +1361,14 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 var group_data_tagall = await cakrayp.groupMetadata(from)
                 var participants_ = group_data_tagall.participants
                 txt_tagged = messagesText ? `*Message :* ${messagesText}\n\n` : ''
-                txt_tagged += '┌──「 Mention ALL 」\n'
-                txt_tagged += `├ Totally : ${participants_.length}\n│\n`
+                txt_tagged += '┏━━「 Mention ALL 」\n'
+                txt_tagged += `┠❂ Totally : ${participants_.length}\n│\n`
                 var arr_mem = []
                 for (let mem of participants_) {
-                    txt_tagged += `├➢ @${mem.id.split('@')[0]}\n`
+                    txt_tagged += `┠❂➢ @${mem.id.split('@')[0]}\n`
                     arr_mem.push(mem.id)
                 }
-                txt_tagged += `│\n└──「 ${Bot_Name} 」`
+                txt_tagged += `│\n┗━━「 ${Bot_Name} 」`
                 cakrayp.sendMessage(from, {
                     text: txt_tagged,
                     contextInfo: {
@@ -1339,13 +1497,13 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (position !== false) {
                     mentionedJid_remove.splice(position, 1)
                 }
-                txt_kick = `┌──「 KICK 」\n`
-                txt_kick += `├ Totally : ${mentionedJid_remove.length}\n│\n`
+                txt_kick = `┏━━「 KICK 」\n`
+                txt_kick += `┠❂ Totally : ${mentionedJid_remove.length}\n│\n`
                 for (let i = 0; i < mentionedJid_remove.length; i++) {
-                    txt_kick += `├➢ @${mentionedJid_remove[i].split('@')[0]}\n`
+                    txt_kick += `┠❂➢ @${mentionedJid_remove[i].split('@')[0]}\n`
                     await cakrayp.groupParticipantsUpdate(from, [mentionedJid_remove[i]], "remove")
                 }
-                txt_kick += `│\n└──「 ${Bot_Name} 」`
+                txt_kick += `│\n┗━━「 ${Bot_Name} 」`
                 mentions(language_text(`Berhasil mengeluarkan peserta dari group *${groupName}*.\n\n${txt_kick}`, `Successfully removed participants from the *${groupName}* group\n\n${txt_kick}`), mentionedJid_remove, true)
                 break
             case 'oadd':
@@ -1385,13 +1543,13 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (position !== false) {
                     mentionedJid_remove.splice(position, 1)
                 }
-                txt_okick = `┌──「 KICK 」\n`
-                txt_okick += `├ Totally : ${mentionedJid_remove.length}\n│\n`
+                txt_okick = `┏━━「 KICK 」\n`
+                txt_okick += `┠❂ Totally : ${mentionedJid_remove.length}\n│\n`
                 for (let i = 0; i < mentionedJid_remove.length; i++) {
-                    txt_okick += `├➢ @${mentionedJid_remove[i].split('@')[0]}\n`
+                    txt_okick += `┠❂➢ @${mentionedJid_remove[i].split('@')[0]}\n`
                     await cakrayp.groupParticipantsUpdate(from, [mentionedJid_remove[i]], "remove")
                 }
-                txt_okick += `│\n└──「 ${Bot_Name} 」`
+                txt_okick += `│\n┗━━「 ${Bot_Name} 」`
                 mentions(language_text(`Berhasil mengeluarkan peserta dari group *${groupName}*.\n\n${txt_okick}`, `Successfully removed participants from the *${groupName}* group\n\n${txt_okick}`), mentionedJid_remove, true)
                 break
             case 'kickall':
@@ -1435,17 +1593,17 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 // console.log(mentionedJid_promote)
                 var group_metaData = await cakrayp.groupMetadata(from)
                 var getIsGroupAdmin = group_metaData.participants.filter((x) => x.admin).map((x) => x.id); // for includes, when user has been already a admin
-                txt_promote = `┌──「 PROMOTE 」\n`
-                txt_promote += `├ Totally : ${mentionedJid_promote.length}\n│\n`
+                txt_promote = `┏━━「 PROMOTE 」\n`
+                txt_promote += `┠❂ Totally : ${mentionedJid_promote.length}\n│\n`
                 for (let i = 0; i < mentionedJid_promote.length; i++) {
                     if (getIsGroupAdmin.includes(mentionedJid_promote[i])) {
-                        txt_promote += `├➢ @${mentionedJid_promote[i].split('@')[0]} (Admin)\n`
+                        txt_promote += `┠❂➢ @${mentionedJid_promote[i].split('@')[0]} (Admin)\n`
                     } else {
-                        txt_promote += `├➢ @${mentionedJid_promote[i].split('@')[0]}\n`
+                        txt_promote += `┠❂➢ @${mentionedJid_promote[i].split('@')[0]}\n`
                         await cakrayp.groupParticipantsUpdate(from, [mentionedJid_promote[i]], command)
                     }
                 }
-                txt_promote += `│\n└──「 ${Bot_Name} 」`
+                txt_promote += `│\n┗━━「 ${Bot_Name} 」`
                 mentions(language_text(`Berhasil menambahkan sebagai admin group.\n\n${txt_promote}`, `Successfully added as group admin.\n\n${txt_promote}`), mentionedJid_promote, true)
                 break
             case 'demote':
@@ -1457,17 +1615,17 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 // console.log(mentionedJid_demote)
                 var group_metaData = await cakrayp.groupMetadata(from)
                 var getIsGroupAdmin = group_metaData.participants.filter((x) => x.admin).map((x) => x.id); // for includes, when user has not been a admin
-                txt_demote = `┌──「 DEMOTE 」\n`
-                txt_demote += `├ Totally : ${mentionedJid_demote.length}\n│\n`
+                txt_demote = `┏━━「 DEMOTE 」\n`
+                txt_demote += `┠❂ Totally : ${mentionedJid_demote.length}\n│\n`
                 for (let i = 0; i < mentionedJid_demote.length; i++) {
                     if (!getIsGroupAdmin.includes(mentionedJid_demote[i])) {
-                        txt_demote += `├➢ @${mentionedJid_demote[i].split('@')[0]} (Not Admin)\n`
+                        txt_demote += `┠❂➢ @${mentionedJid_demote[i].split('@')[0]} (Not Admin)\n`
                     } else {
-                        txt_demote += `├➢ @${mentionedJid_demote[i].split('@')[0]}\n`
+                        txt_demote += `┠❂➢ @${mentionedJid_demote[i].split('@')[0]}\n`
                         await cakrayp.groupParticipantsUpdate(from, [mentionedJid_demote[i]], command)
                     }
                 }
-                txt_demote += `│\n└──「 ${Bot_Name} 」`
+                txt_demote += `│\n┗━━「 ${Bot_Name} 」`
                 mentions(language_text(`Berhasil menghentikan sebagai admin group.\n\n${txt_demote}`, `Succeeded in stopping as group admin.\n\n${txt_demote}`), mentionedJid_demote, true)
                 break
             case 'opromote':
@@ -1479,17 +1637,17 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 // console.log(mentionedJid_promote)
                 var group_metaData = await cakrayp.groupMetadata(from)
                 var getIsGroupAdmin = group_metaData.participants.filter((x) => x.admin).map((x) => x.id); // for includes, when user has been already a admin
-                txt_promote = `┌──「 PROMOTE 」\n`
-                txt_promote += `├ Totally : ${mentionedJid_promote.length}\n│\n`
+                txt_promote = `┏━━「 PROMOTE 」\n`
+                txt_promote += `┠❂ Totally : ${mentionedJid_promote.length}\n│\n`
                 for (let i = 0; i < mentionedJid_promote.length; i++) {
                     if (getIsGroupAdmin.includes(mentionedJid_promote[i])) {
-                        txt_promote += `├➢ @${mentionedJid_promote[i].split('@')[0]} (Admin)\n`
+                        txt_promote += `┠❂➢ @${mentionedJid_promote[i].split('@')[0]} (Admin)\n`
                     } else {
-                        txt_promote += `├➢ @${mentionedJid_promote[i].split('@')[0]}\n`
+                        txt_promote += `┠❂➢ @${mentionedJid_promote[i].split('@')[0]}\n`
                         await cakrayp.groupParticipantsUpdate(from, [mentionedJid_promote[i]], command.slice(1))
                     }
                 }
-                txt_promote += `│\n└──「 ${Bot_Name} 」`
+                txt_promote += `│\n┗━━「 ${Bot_Name} 」`
                 mentions(language_text(`Berhasil menambahkan sebagai admin group.\n\n${txt_promote}`, `Successfully added as group admin.\n\n${txt_promote}`), mentionedJid_promote, true)
                 break
             case 'odemote':
@@ -1501,17 +1659,17 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 // console.log(mentionedJid_demote)
                 var group_metaData = await cakrayp.groupMetadata(from)
                 var getIsGroupAdmin = group_metaData.participants.filter((x) => x.admin).map((x) => x.id); // for includes, when user hasn't been a admin
-                txt_demote = `┌──「 DEMOTE 」\n`
-                txt_demote += `├ Totally : ${mentionedJid_demote.length}\n│\n`
+                txt_demote = `┏━━「 DEMOTE 」\n`
+                txt_demote += `┠❂ Totally : ${mentionedJid_demote.length}\n│\n`
                 for (let i = 0; i < mentionedJid_demote.length; i++) {
                     if (!getIsGroupAdmin.includes(mentionedJid_demote[i])) {
-                        txt_demote += `├➢ @${mentionedJid_demote[i].split('@')[0]} (Not Admin)\n`
+                        txt_demote += `┠❂➢ @${mentionedJid_demote[i].split('@')[0]} (Not Admin)\n`
                     } else {
-                        txt_demote += `├➢ @${mentionedJid_demote[i].split('@')[0]}\n`
+                        txt_demote += `┠❂➢ @${mentionedJid_demote[i].split('@')[0]}\n`
                         await cakrayp.groupParticipantsUpdate(from, [mentionedJid_demote[i]], command.slice(1))
                     }
                 }
-                txt_demote += `│\n└──「 ${Bot_Name} 」`
+                txt_demote += `│\n┗━━「 ${Bot_Name} 」`
                 mentions(language_text(`Berhasil menghentikan sebagai admin group.\n\n${txt_demote}`, `Succeeded in stopping as group admin.\n\n${txt_demote}`), mentionedJid_demote, true)
                 break
             case 'leave':
