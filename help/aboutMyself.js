@@ -1,6 +1,6 @@
 exports.myself = (prefix) => {
     return `
-SEJARAH *CAKRA BOT*
+SEJARAH *R-BOT*
 
 Awalnya dari bulan desember tahun 2020 ada beberapa pengguna yang iseng2 mencoba memakai perintah whatsapp bot dari group lain, lalu saya mencoba dan pas saya mencoba akhirnya saya tertarik membuat sebuah bot whatsapp, karena sebagai pemmogramman itu simple.
 

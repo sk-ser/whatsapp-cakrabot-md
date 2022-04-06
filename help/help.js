@@ -444,7 +444,7 @@ Kartu operator By.U juga dapat mengirim/transfer pulsa dengan operator sesama de
 
 ┌──「 Donate 」
 │
-├ • *No :* 085161422971 (By.U)
+├ • *No :* 081515589573 (By.U)
 │
 ├ *Website*
 ├ • *Saweria :* https://saweria.co/cakrayp
@@ -468,10 +468,10 @@ https://github.com/cakrayp/whatsapp-cakrabot-md.git
 
 Contact person:
 wa.me/${ownerNumber.replace('@c.us', '')} (Owner/hoster)
-wa.me/6285161422971 (Developer)
+wa.me/6281515589573 (Developer)
 
 Kalian juga bisa mendukung saya agar bot ini tetap up to date dengan:
-085161422971 (Dana/OVO/Telkomsel)
+081515589573 (Dana/OVO/Telkomsel)
 
 Terima kasih.
 
@@ -491,10 +491,10 @@ https://github.com/cakrayp/whatsapp-cakrabot-md.git
 
 Contact person:
 wa.me/${ownerNumber.replace('@c.us', '')} (Owner/hoster)
-wa.me/6285161422971 (Developer)
+wa.me/6281515589573 (Developer)
 
 You guys can also support me to keep this bot up to date with:
-085161422971 (Dana/OVO/Telkomsel)
+081515589573 (Dana/OVO/Telkomsel)
 
 Thank you.
 
