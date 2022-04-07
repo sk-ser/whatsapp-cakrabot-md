@@ -111,7 +111,7 @@ async function sleep(ms) {
 // database Array
 kickall = [];
 
-module.exports = async (cakrayp, store, msg) => {
+module.exports = async (rama, store, msg) => {
     try {
         // if (m.key.fromMe) return      because it has been placed in file ../index.js
         if (msg.message?.protocolMessage) return;
@@ -133,10 +133,10 @@ module.exports = async (cakrayp, store, msg) => {
         const isGroup = msg.key.remoteJid.endsWith('@g.us')
         const sender = isGroup ? (msg.key.participant ? msg.key.participant : msg.participant) : msg.key.remoteJid
         const isOwner = isGroup ? sender.includes(ownerNumber) : sender.includes(ownerNumber + "@s.whatsapp.net")
-        const botNumber = cakrayp.user.id.split(':')[0] + '@s.whatsapp.net'
-        const botProfile = setBotProfileSelf ? await getBuffer(await cakrayp.profilePictureUrl(botNumber, 'image')) ? await getBuffer(await cakrayp.profilePictureUrl(botNumber, 'image')) : fs.readFileSync('./file/img/no_ppuser.jpeg') : BotImage
-        const Bot_Name = BotName || cakrayp.user.name
-        const groupMetadata = isGroup ? await cakrayp.groupMetadata(from) : ''
+        const botNumber = rama.user.id.split(':')[0] + '@s.whatsapp.net'
+        const botProfile = setBotProfileSelf ? await getBuffer(await rama.profilePictureUrl(botNumber, 'image')) ? await getBuffer(await rama.profilePictureUrl(botNumber, 'image')) : fs.readFileSync('./file/img/no_ppuser.jpeg') : BotImage
+        const Bot_Name = BotName || rama.user.name
+        const groupMetadata = isGroup ? await rama.groupMetadata(from) : ''
         const groupName = groupMetadata.subject
         const groupMembers = isGroup ? groupMetadata.participants : ''
         const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
@@ -160,10 +160,10 @@ module.exports = async (cakrayp, store, msg) => {
             return exec(chats.slice(1).trim(), async (err, stdout, stderr) => {
                 if (!stderr) {
                     console.log(stdout)
-                    return cakrayp.sendMessage(from, { text: stdout }, { quoted: msg })
+                    return rama.sendMessage(from, { text: stdout }, { quoted: msg })
                 } else {
                     console.log(stderr)
-                    return cakrayp.sendMessage(from, { text: stderr }, { quoted: msg })
+                    return rama.sendMessage(from, { text: stderr }, { quoted: msg })
                 }
             })
         }
@@ -196,9 +196,9 @@ module.exports = async (cakrayp, store, msg) => {
             if (isGroup && isCmd) console.log(color(`[${time}] :`, "aqua"), color("[ SELFBOT ] :", "yellow"), color(chats), "from", color(`${sender.split('@')[0]} (${pushname})`, "yellow"), "in", color(groupName, "yellow"))
         }
 
-        autoReadChat ? await cakrayp.sendReadReceipt(from, sender, [msg.key.id]) : false                            //  for Read message
-        autoTyping ? (isCmd && command) ? await cakrayp.sendPresenceUpdate('composing', from) : false : false       //  for typing message
-        // await cakrayp.presenceSubscribe(sender)
+        autoReadChat ? await rama.sendReadReceipt(from, sender, [msg.key.id]) : false                            //  for Read message
+        autoTyping ? (isCmd && command) ? await rama.sendPresenceUpdate('composing', from) : false : false       //  for typing message
+        // await rama.presenceSubscribe(sender)
 
         const isUrl = (uri) => {
             return uri.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%.+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%+.~#?&/=]*)/, 'gi'))
@@ -428,20 +428,20 @@ module.exports = async (cakrayp, store, msg) => {
          */
 
         const reply = (text) => {     // You can setting in the file "../settings.js"
-            replyWithThumbnail ? cakrayp.sendMessage(from, { text, contextInfo: { "externalAdReply": { title: Bot_Name, sourceUrl: `https://wa.me/${sender.split('@')[0]}`, body: `~> Request By ${pushname}`, mediaType: 3, "thumbnail": botProfile }, "mentionedJid": [sender] } }, usereplyMessage ? { quoted: msg } : '') : cakrayp.sendMessage(from, { text }, usereplyMessage ? { quoted: msg } : '')
+            replyWithThumbnail ? rama.sendMessage(from, { text, contextInfo: { "externalAdReply": { title: Bot_Name, sourceUrl: `https://wa.me/${sender.split('@')[0]}`, body: `~> Request By ${pushname}`, mediaType: 3, "thumbnail": botProfile }, "mentionedJid": [sender] } }, usereplyMessage ? { quoted: msg } : '') : rama.sendMessage(from, { text }, usereplyMessage ? { quoted: msg } : '')
         }
         const replyCustom = (text, options = {}) => {     // You can setting in the file "../settings.js"
-            replyWithThumbnail ? cakrayp.sendMessage(from, { text, contextInfo: { "externalAdReply": { title: Bot_Name, sourceUrl: `https://wa.me/${sender.split('@')[0]}`, body: `~> Request By ${pushname}`, mediaType: 3, "thumbnail": botProfile }, "mentionedJid": [sender] } }, options ? options : '') : cakrayp.sendMessage(from, { text }, options ? options : '')
+            replyWithThumbnail ? rama.sendMessage(from, { text, contextInfo: { "externalAdReply": { title: Bot_Name, sourceUrl: `https://wa.me/${sender.split('@')[0]}`, body: `~> Request By ${pushname}`, mediaType: 3, "thumbnail": botProfile }, "mentionedJid": [sender] } }, options ? options : '') : rama.sendMessage(from, { text }, options ? options : '')
         }
         const replyWithThumb = (text, boolean) => {     // You can use this for reply with thumb"
-            cakrayp.sendMessage(from, { text, contextInfo: { "externalAdReply": { title: Bot_Name, sourceUrl: `https://wa.me/${sender.split('@')[0]}`, body: `~> Request By ${pushname}`, mediaType: 3, "thumbnail": botProfile }, "mentionedJid": [sender] } }, boolean ? { quoted: msg } : '')
+            rama.sendMessage(from, { text, contextInfo: { "externalAdReply": { title: Bot_Name, sourceUrl: `https://wa.me/${sender.split('@')[0]}`, body: `~> Request By ${pushname}`, mediaType: 3, "thumbnail": botProfile }, "mentionedJid": [sender] } }, boolean ? { quoted: msg } : '')
         }
         const replyWithThumbCustom = (text, title, sourceUrl, body, thumb_Buff, options = {}) => {     // You can use custom reply with thumbnail"
-            cakrayp.sendMessage(from, { text, contextInfo: { "externalAdReply": { title, sourceUrl, body, mediaType: 3, "thumbnail": thumb_Buff }, "mentionedJid": [sender] } }, options ? options : '')
+            rama.sendMessage(from, { text, contextInfo: { "externalAdReply": { title, sourceUrl, body, mediaType: 3, "thumbnail": thumb_Buff }, "mentionedJid": [sender] } }, options ? options : '')
         }
 
         const mentions = (text, senderUser, boolean) => {
-            cakrayp.sendMessage(from, { text, contextInfo: { mentionedJid: senderUser } }, boolean ? { quoted: msg } : '')
+            rama.sendMessage(from, { text, contextInfo: { mentionedJid: senderUser } }, boolean ? { quoted: msg } : '')
         }
 
         async function downloadAndSaveMediaMessage(type_file, path_file) {
@@ -500,10 +500,10 @@ module.exports = async (cakrayp, store, msg) => {
                 if (isGroupLink) {
                     console.log(GroupLinkRegex.exec(chats))
                     // Check group information...
-                    const getGcMeta = await cakrayp.groupMetadata(from)
+                    const getGcMeta = await rama.groupMetadata(from)
                     const getGroupCode = GroupLinkRegex.exec(chats)[1];
                     const checkQuery = async (code) => {
-                        const results = await cakrayp.query({
+                        const results = await rama.query({
                             tag: "iq",
                             attrs: {
                                 type: "get",
@@ -517,14 +517,14 @@ module.exports = async (cakrayp, store, msg) => {
                     checkQuery(getGroupCode)
                         .then(async (group_info) => {
                             if (group_info.id + "@g.us" == from) return;
-                            cakrayp.sendMessage(from, {
+                            rama.sendMessage(from, {
                                 text: language_text(
                                     `*「 GROUP LINK DETECTED 」*\n\nMohon maaf, link group ini telah terdeteksi oleh bot dan bot akan mengeluarkan anda digroup *${getGcMeta.subject}* secara otomatis.`,
                                     `*「 GROUP LINK DETECTED 」*\n\nSorry, this link has been detected by bot and you will be remove/kick to you of group *${getGcMeta.subject}* automatically`
                                 )
                             }, { quoted: msg }).then(() => {
                                 setTimeout(async () => {
-                                    await cakrayp.groupParticipantsUpdate(
+                                    await rama.groupParticipantsUpdate(
                                         from,
                                         [sender],
                                         "remove"
@@ -617,7 +617,7 @@ module.exports = async (cakrayp, store, msg) => {
 
         // Message Buttons
         const templateButtons_menu = [
-            { index: 1, urlButton: { displayText: '⭐ Rest API!', url: 'https://cakrayp.herokuapp.com/' } },
+            { index: 1, urlButton: { displayText: 'O W N E R', url: 'wa.me/6281515589573' } },
             { index: 2, callButton: { displayText: 'Contact', phoneNumber: `+${ownerNumber}` } },
             { index: 3, quickReplyButton: { displayText: 'Menu', id: `${prefix}cmd` } },
             { index: 4, quickReplyButton: { displayText: 'Allmenu', id: `${prefix}allmenu` } },
@@ -634,7 +634,7 @@ module.exports = async (cakrayp, store, msg) => {
                     id: `*「 ${Bot_Name} 」*\n\nHai kak ${pushname}.\n\nSelamat ${Clockset.swichtime(salam)} Silahkan dipilih fitur di *${prefix}menu* untuk memulai dari setiap perintah, jika tombol ini tidak merespon anda dapat memilih perintah dibawah berikut ini.\n\n*${prefix}cmd*\n*${prefix}allmenu*\n\njangan lupa berdonasi agar tetap terupdate`,
                     en: `*「 ${Bot_Name} 」*\n\nHi ${pushname}.\n\n${await translate(`Selamat ${Clockset.swichtime(salam)}`)} Please select a feature in *${prefix}menu* to start from every command, if this button does not respond you can choose the following command.\n\n*${prefix}cmd*\n*${prefix}allmenu*\n\ndon't forget to donate to stay updated`
                 }
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     caption: language_text(menu_lang.id, menu_lang.en),
                     jpegThumbnail: botProfile,
                     footer: language_text('Silahkan dipilih tombol dibawah', 'Please choose here in below.'),
@@ -794,7 +794,7 @@ let sectionnya= [{
 								]
 							}
 						]
-hisoka.sendList(m.chat, `Halo ${pushname}`, `BOT MENU
+rama.sendList(m.chat, `Halo ${pushname}`, `BOT MENU
 
 LIBRAY:  *BAILEYS MD*`, "R-BOT", "CLICK HERE ", sectionnya, { quoted: m})
 break                
@@ -852,7 +852,7 @@ break
 │
 ┗━━「 ${Bot_Name} 」
 `.trim()
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     caption: menunya,
                     footer: language_text('Jangan lupa berdonasi agar tetap update', 'Don\'t forget to donate to stay updated.'),
                     templateButtons: [
@@ -867,7 +867,7 @@ break
                 break
 */
             case 'allmenu':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     caption: allmenu(pushname, isIndonesian, language, Clockset.swichtime(moment(new Date()).format('HH')), time, prefix),
                     footer: language_text('Jangan lupa berdonasi agar tetap update', 'Don\'t forget to donate to stay updated.'),
                     templateButtons: [
@@ -881,7 +881,7 @@ break
                 })
                 break
             case 'menuislamic':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listislami(prefix),
@@ -892,7 +892,7 @@ break
                 })
                 break
             case 'menuadmin':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listAdminGroup(prefix),
@@ -903,7 +903,7 @@ break
                 })
                 break
             case 'menudownloader':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listdownloader(prefix),
@@ -914,7 +914,7 @@ break
                 })
                 break
             case 'menuconverter':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listconvert(prefix),
@@ -925,7 +925,7 @@ break
                 })
                 break
             case 'menusearching':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listsearch(prefix),
@@ -936,7 +936,7 @@ break
                 })
                 break
             case 'menurandomtext':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listrandom(prefix),
@@ -947,7 +947,7 @@ break
                 })
                 break
             case 'menuanime':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listmanga(prefix),
@@ -958,7 +958,7 @@ break
                 })
                 break
             case 'menumedia':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listmedsos(prefix),
@@ -970,7 +970,7 @@ break
                 break
             case 'menuinformasi':
             case 'menuinformation':
-                // cakrayp.sendMessage(from, {
+                // rama.sendMessage(from, {
                 //     image: botProfile,
                 //     jpegThumbnail: botProfile,
                 //     caption: helpmenu.listinfomation(prefix),
@@ -979,14 +979,14 @@ break
                 //     headerType: 4,
                 //     contextInfo: { mentionedJid: [sender] }
                 // })
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listinfomation(prefix),
                 }, { quoted: msg })
                 break
             case 'menuentertaiment':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listentertaiment(prefix),
@@ -997,7 +997,7 @@ break
                 })
                 break
             case 'menucreator':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listcreator(prefix),
@@ -1008,14 +1008,14 @@ break
                 })
                 break
             case 'menugoogle':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listgoogle(prefix),
                 }, { quoted: msg })
                 break
             case 'menuprimbon':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listprimbon(prefix),
@@ -1026,7 +1026,7 @@ break
                 })
                 break
             case 'menutextpro':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listtextpro(prefix),
@@ -1037,7 +1037,7 @@ break
                 })
                 break
             case 'menuphotoxy':
-                // cakrayp.sendMessage(from, {
+                // rama.sendMessage(from, {
                 //     image: botProfile,
                 //     jpegThumbnail: botProfile,
                 //     caption: helpmenu.listphotoxy(prefix),
@@ -1049,7 +1049,7 @@ break
                 reply(commannd_response('mainstance'))
                 break
             case 'menurandomimg':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listrandomimage(prefix),
@@ -1060,7 +1060,7 @@ break
                 })
                 break
             case 'menugroup':
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: helpmenu.listgroup(prefix),
@@ -1081,7 +1081,7 @@ break
                 break
             case 'donate':
             case 'donasi':
-                cakrayp.sendMessage(from, { image: BotImage, caption: helpmenu.donate() })
+                rama.sendMessage(from, { image: BotImage, caption: helpmenu.donate() })
                 break
             case 'owner':
                 const vcard = 'BEGIN:VCARD\n' // metadata of the contact card
@@ -1090,7 +1090,7 @@ break
                     + 'ORG:Ashoka Uni;\n' // the organization of the contact
                     + 'TEL;type=CELL;type=VOICE;waid=' + ownerNumber + ':+' + ownerNumber + '\n' // WhatsApp ID + phone number
                     + 'END:VCARD'
-                await cakrayp.sendMessage(from, {
+                await rama.sendMessage(from, {
                     contacts: {
                         displayName: 'Jeff',
                         contacts: [{ vcard }]
@@ -1128,7 +1128,7 @@ don't forget to follow my account
 ┠❂ • *Website :*
 ┠❂ https://cakrajihan.wordpress.com
 ┠❂ • *Blogger :*
-┠❂ https://cakraypjhn.blogspot.com
+┠❂ https://ramajhn.blogspot.com
 ┠❂ • *Rest API :*
 ┠❂ ${apiCakra}
 ┠❂ • *Instagram :*
@@ -1138,7 +1138,7 @@ don't forget to follow my account
 │
 ┗━━「 ${Bot_Name} 」
 `.trim()
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: botProfile,
                     jpegThumbnail: botProfile,
                     caption: mysosmed
@@ -1239,13 +1239,13 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     const mentioned = msg.message.extendedTextMessage.contextInfo.mentionedJid;
                     if (isGroup && msg.message.extendedTextMessage === null) return reply(language_text('Pengguna tidak ditemukan, Silahkan ditag pengguna yang lain', 'Users are not found, please tag another user'))
                     for (let i = 0; i < mentioned.length; i++) {
-                        cakrayp.profilePictureUrl(mentioned[i], "image")
+                        rama.profilePictureUrl(mentioned[i], "image")
                             .then(async (result_image) => {
                                 const get_buffer_profile = await getBuffer(result_image);
-                                cakrayp.sendMessage(from, { image: get_buffer_profile, jpegThumbnail: get_buffer_profile, caption: `@${mentioned[i].split("@")[0]}`, contextInfo: { mentionedJid: mentioned } }, { quoted: msg })
+                                rama.sendMessage(from, { image: get_buffer_profile, jpegThumbnail: get_buffer_profile, caption: `@${mentioned[i].split("@")[0]}`, contextInfo: { mentionedJid: mentioned } }, { quoted: msg })
                             })
                             .catch(async () => {
-                                cakrayp.sendMessage(from, { image: not_ppuser, jpegThumbnail: not_ppuser, caption: `@${mentioned[i].split("@")[0]}`, contextInfo: { mentionedJid: mentioned } }, { quoted: msg })
+                                rama.sendMessage(from, { image: not_ppuser, jpegThumbnail: not_ppuser, caption: `@${mentioned[i].split("@")[0]}`, contextInfo: { mentionedJid: mentioned } }, { quoted: msg })
                             })
                     }
                 } else if (messagesText && msg.message.extendedTextMessage === null) {
@@ -1253,13 +1253,13 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     if (!/^[0-9]+$/.test(messagesText)) return reply(commannd_response('numberOnly'))
                     if (messagesText.length < 8) return reply(language_text('Silahkan masukkan nomor telepon minimal 8 karakter', 'Please enter a phone number of at least 8 characters'))
                     if (messagesText.length > 18) return reply(language_text('Mohon maaf, nomor ini tercapai maksimal 18 karakter', 'Sorry, this number has reached a maximum of 18 characters'))
-                    cakrayp.profilePictureUrl(`${messagesText}@s.whatsapp.net`, "image")
+                    rama.profilePictureUrl(`${messagesText}@s.whatsapp.net`, "image")
                         .then(async (result_image) => {
                             const get_buffer_profile = await getBuffer(result_image);
-                            cakrayp.sendMessage(from, { image: get_buffer_profile, jpegThumbnail: get_buffer_profile, caption: `@${messagesText}`, contextInfo: { mentionedJid: [`${messagesText}@s.whatsapp.net`] } }, { quoted: msg })
+                            rama.sendMessage(from, { image: get_buffer_profile, jpegThumbnail: get_buffer_profile, caption: `@${messagesText}`, contextInfo: { mentionedJid: [`${messagesText}@s.whatsapp.net`] } }, { quoted: msg })
                         })
                         .catch(async () => {
-                            cakrayp.sendMessage(from, { image: not_ppuser, jpegThumbnail: not_ppuser, caption: `@${messagesText}`, contextInfo: { mentionedJid: [`${messagesText}@s.whatsapp.net`] } }, { quoted: msg })
+                            rama.sendMessage(from, { image: not_ppuser, jpegThumbnail: not_ppuser, caption: `@${messagesText}`, contextInfo: { mentionedJid: [`${messagesText}@s.whatsapp.net`] } }, { quoted: msg })
                         })
                 }
                 break
@@ -1276,7 +1276,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 txt_report += `*• Time :* ${time}\n\n`
                 txt_report += `*「 Message 」*\n\n${messagesText ? messagesText : '(No Messages)'}\n\n`
                 txt_report += `© Made by ${author}`
-                try { get_ppuser = await getBuffer(await cakrayp.profilePictureUrl(sender, "image")) } catch { get_ppuser = not_ppuser }
+                try { get_ppuser = await getBuffer(await rama.profilePictureUrl(sender, "image")) } catch { get_ppuser = not_ppuser }
                 if (isQuotedImage || isQuotedVideo || /^(image|video)Message$/.test(Object.keys(msg.message))) {
                     const getMediaMessageTypeOfReport = Object.keys(type == 'extendedTextMessage' ? msg.message.extendedTextMessage?.contextInfo.quotedMessage : msg.message)[0]
                     const getMediaMetaBuff = await downloadMediaMessageWithBuffer(msg.message[getMediaMessageTypeOfReport] || msg.message.extendedTextMessage?.contextInfo.quotedMessage[getMediaMessageTypeOfReport], getMediaMessageTypeOfReport.replace("Message", ""))
@@ -1292,7 +1292,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             "thumbnail": get_ppuser
                         },
                     },
-                        cakrayp.sendMessage(`${ownerNumber}@s.whatsapp.net`, makeToSendMessagesObject).then(() => reply(language_text('Berhasil mengirim pesan ke owner', 'Success message sent to owner')))
+                        rama.sendMessage(`${ownerNumber}@s.whatsapp.net`, makeToSendMessagesObject).then(() => reply(language_text('Berhasil mengirim pesan ke owner', 'Success message sent to owner')))
                 } else {
                     if (!messagesText) return reply(language_text(
                         `Silahkan masukkan data yang anda ingin report dengan cara mengirim text atau foto/video, Kami dapat membantu dengan senang hati 😊`,
@@ -1307,7 +1307,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             "thumbnail": get_ppuser
                         },
                     },
-                        cakrayp.sendMessage(`${ownerNumber}@s.whatsapp.net`, { text: txt_report, contextInfo }).then(() => reply(language_text('Berhasil mengirim pesan ke owner', 'Success message sent to owner')))
+                        rama.sendMessage(`${ownerNumber}@s.whatsapp.net`, { text: txt_report, contextInfo }).then(() => reply(language_text('Berhasil mengirim pesan ke owner', 'Success message sent to owner')))
                 }
                 break
 
@@ -1323,12 +1323,12 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         let makeToSendMessagesObject = {};
                         makeToSendMessagesObject[getMediaMessageTypeOfBroadcast.replace("Message", "")] = getMediaMetaBuff;     //  Make this Object { image/video: <buffer> }
                         makeToSendMessagesObject['caption'] = `*「 Broadcast 」*\n\n${messagesText ? messagesText : "No Messages"}\n\n© Made by ${author}`;
-                        cakrayp.sendMessage(Jid, makeToSendMessagesObject)
+                        rama.sendMessage(Jid, makeToSendMessagesObject)
                     }
                 } else {
                     if (!messagesText) return reply(language_text(`Silakan masukkan text atau kirim foto/video yang akan dikirimkan ke semua chat\n\nContoh: *${prefix + command}* <text>\n*${prefix + command}* hello world`, `Please enter text or send a photo/video that will be sent to all chats\n\nExample: *${prefix + command}* <text>\n*${prefix + command}* hello world`))
                     for (let Jid of list_chats_user) {
-                        cakrayp.sendMessage(Jid, {
+                        rama.sendMessage(Jid, {
                             text: `*「 Broadcast 」*\n\n${messagesText ? messagesText : "No Messages"}\n\n© Made by ${author}`
                         })
                     }
@@ -1337,7 +1337,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             case 'otagall':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isOwner) return reply(commannd_response('admin_owner'))
-                var group_data_tagall = await cakrayp.groupMetadata(from)
+                var group_data_tagall = await rama.groupMetadata(from)
                 var participants_ = group_data_tagall.participants
                 txt_tagged = messagesText ? `*Message :* ${messagesText}\n\n` : ''
                 txt_tagged += '┏━━「 Mention ALL 」\n'
@@ -1348,7 +1348,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     arr_mem.push(mem.id)
                 }
                 txt_tagged += `│\n┗━━「 ${Bot_Name} 」`
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     text: txt_tagged,
                     contextInfo: {
                         mentionedJid: arr_mem
@@ -1358,7 +1358,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             case 'tagall':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isGroupAdmins) return reply(commannd_response('admin_owner'))
-                var group_data_tagall = await cakrayp.groupMetadata(from)
+                var group_data_tagall = await rama.groupMetadata(from)
                 var participants_ = group_data_tagall.participants
                 txt_tagged = messagesText ? `*Message :* ${messagesText}\n\n` : ''
                 txt_tagged += '┏━━「 Mention ALL 」\n'
@@ -1369,7 +1369,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     arr_mem.push(mem.id)
                 }
                 txt_tagged += `│\n┗━━「 ${Bot_Name} 」`
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     text: txt_tagged,
                     contextInfo: {
                         mentionedJid: arr_mem
@@ -1379,9 +1379,9 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             case 'ohidetag':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isOwner) return reply(commannd_response('admin_owner'))
-                var group_data_hidetag = await cakrayp.groupMetadata(from)
+                var group_data_hidetag = await rama.groupMetadata(from)
                 var participants_list = group_data_hidetag.participants;
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     text: messagesText ? messagesText : '',
                     contextInfo: {
                         mentionedJid: participants_list.map((memb) => memb.id)
@@ -1391,9 +1391,9 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             case 'hidetag':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isGroupAdmins) return reply(commannd_response('admin_owner'))
-                var group_data_hidetag = await cakrayp.groupMetadata(from)
+                var group_data_hidetag = await rama.groupMetadata(from)
                 var participants_list = group_data_hidetag.participants;
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     text: messagesText ? messagesText : '',
                     contextInfo: {
                         mentionedJid: participants_list.map((memb) => memb.id)
@@ -1407,7 +1407,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     const mentioned = msg.message.extendedTextMessage.contextInfo.mentionedJid;
                     if (isGroup && msg.message.extendedTextMessage === null) return reply(language_text('Pengguna tidak ditemukan, Silahkan ditag pengguna yang lain', 'Users are not found, please tag another user'))
                     for (let i = 0; i < mentioned.length; i++) {
-                        await cakrayp.updateBlockStatus(mentioned[i], command);
+                        await rama.updateBlockStatus(mentioned[i], command);
                     }
                     reply(language_text(`Berhasil ${command == 'block' ? 'blok' : 'Membuka blok'} target tersebut.`, `Successfully to ${command} target.`))
                 } else if (messagesText && msg.message.extendedTextMessage === null) {
@@ -1415,7 +1415,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     if (!/^[0-9]+$/.test(messagesText)) return reply(commad_response('numberOnly'))
                     if (messagesText.length > 18) return reply(language_text('Mohon maaf nomor ini telah melebihi 18 karakter', 'Sorry, this number has exceeded 18 characters'))
                     if (messagesText.length < 6) return reply(language_text('Mohon maaf nomor ini tidak melebihi 18 karakter', 'Sorry, this number does not exceed 18 characters'))
-                    await cakrayp.updateBlockStatus(`${messagesText}@s.whatsapp.net`, command);
+                    await rama.updateBlockStatus(`${messagesText}@s.whatsapp.net`, command);
                     reply(language_text(`Berhasil ${command == 'block' ? 'blok' : 'Membuka blok'} target tersebut.`, `Successfully to ${commnnd} target.`))
                 }
                 break
@@ -1467,7 +1467,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!messagesText) return reply(language_text(`Silahkan tambahkan nomor target dengan perintah dibawah\n\nContoh: *${prefix + command} (nomor wa)\n*${prefix + command}* ${sender.split("@")[0]}`, `Please add the target number with the command below\n\nE.g: ${prefix}add (nomor wa)\n${prefix}add ${sender.split("@")[0]}`))
                 if (!/^[0-9]+$/.test(messagesText) && /\+|-/.test(messagesText)) return reply(language_text('Mohon maaf ini khusus untuk angka. jika ingin memasukan nomor jangan lupa hilangkan tanda "+", "-" dan spasi', 'Sorry this is for numbers only. If you want to enter a phone number, don\'t forget to remove the "+", "-" signs and space.'))
                 if (!/^[0-9]+$/.test(messagesText)) return reply(commannd_response('numberOnly'))
-                let group_add_mem = await cakrayp.groupMetadata(from)
+                let group_add_mem = await rama.groupMetadata(from)
                 let check_member_add = group_add_mem.participants
                 arrmem = []
                 for (let mem of check_member_add) {
@@ -1476,7 +1476,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (arrmem.includes(`${messagesText}@s.whatsapp.net`)) return reply(language_text('Mohon maaf dikarenakan nomor ini telah ada digroup ini', 'Sorry because this number is already in this group'))
                 if (messagesText.length > 18) return reply(language_text('Mohon maaf nomor ini telah melebihi 18 karakter', 'Sorry, this number has exceeded 18 characters'))
                 if (messagesText.length < 6) return reply(language_text('Mohon maaf nomor ini tidak melebihi 18 karakter', 'Sorry, this number does not exceed 18 characters'))
-                await cakrayp.groupParticipantsUpdate(
+                await rama.groupParticipantsUpdate(
                     from,
                     [messagesText + "@s.whatsapp.net"],
                     "add"
@@ -1501,7 +1501,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 txt_kick += `┠❂ Totally : ${mentionedJid_remove.length}\n│\n`
                 for (let i = 0; i < mentionedJid_remove.length; i++) {
                     txt_kick += `┠❂➢ @${mentionedJid_remove[i].split('@')[0]}\n`
-                    await cakrayp.groupParticipantsUpdate(from, [mentionedJid_remove[i]], "remove")
+                    await rama.groupParticipantsUpdate(from, [mentionedJid_remove[i]], "remove")
                 }
                 txt_kick += `│\n┗━━「 ${Bot_Name} 」`
                 mentions(language_text(`Berhasil mengeluarkan peserta dari group *${groupName}*.\n\n${txt_kick}`, `Successfully removed participants from the *${groupName}* group\n\n${txt_kick}`), mentionedJid_remove, true)
@@ -1513,7 +1513,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!messagesText) return reply(language_text(`Silahkan tambahkan nomor target dengan perintah dibawah\n\nContoh: *${prefix + command} (nomor wa)\n*${prefix + command}* ${sender.split("@")[0]}`, `Please add the target number with the command below\n\nE.g: ${prefix}add (nomor wa)\n${prefix}add ${sender.split("@")[0]}`))
                 if (!/^[0-9]+$/.test(messagesText) && /\+|-/.test(messagesText)) return reply(language_text('Mohon maaf ini khusus untuk angka. jika ingin memasukan nomor jangan lupa hilangkan tanda "+", "-" dan spasi', 'Sorry this is for numbers only. If you want to enter a phone number, don\'t forget to remove the "+", "-" signs and space.'))
                 if (!/^[0-9]+$/.test(messagesText)) return reply(commannd_response('numberOnly'))
-                let group_oadd_mem = await cakrayp.groupMetadata(from)
+                let group_oadd_mem = await rama.groupMetadata(from)
                 let check_member_oadd = group_oadd_mem.participants
                 arrmem = []
                 for (let mem of check_member_oadd) {
@@ -1522,7 +1522,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (arrmem.includes(`${messagesText}@s.whatsapp.net`)) return reply(language_text('Mohon maaf dikarenakan member ini telah ada digroup ini', 'Sorry because this member is already in this group'))
                 if (messagesText.length > 18) return reply(language_text('Mohon maaf nomor ini telah melebihi 18 karakter', 'Sorry, this number has exceeded 18 characters'))
                 if (messagesText.length < 6) return reply(language_text('Mohon maaf nomor ini tidak melebihi 18 karakter', 'Sorry, this number does not exceed 18 characters'))
-                await cakrayp.groupParticipantsUpdate(
+                await rama.groupParticipantsUpdate(
                     from,
                     [messagesText + "@s.whatsapp.net"],
                     "add"
@@ -1547,7 +1547,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 txt_okick += `┠❂ Totally : ${mentionedJid_remove.length}\n│\n`
                 for (let i = 0; i < mentionedJid_remove.length; i++) {
                     txt_okick += `┠❂➢ @${mentionedJid_remove[i].split('@')[0]}\n`
-                    await cakrayp.groupParticipantsUpdate(from, [mentionedJid_remove[i]], "remove")
+                    await rama.groupParticipantsUpdate(from, [mentionedJid_remove[i]], "remove")
                 }
                 txt_okick += `│\n┗━━「 ${Bot_Name} 」`
                 mentions(language_text(`Berhasil mengeluarkan peserta dari group *${groupName}*.\n\n${txt_okick}`, `Successfully removed participants from the *${groupName}* group\n\n${txt_okick}`), mentionedJid_remove, true)
@@ -1556,7 +1556,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isGroupAdmins) return reply(commannd_response('admingroup'))
                 if (!isBotGroupAdmins) return reply(commannd_response('bot_admingroup'))
-                var group_metaData = await cakrayp.groupMetadata(from);
+                var group_metaData = await rama.groupMetadata(from);
                 var get_participants_ = group_metaData.participants;
                 var listmember = get_participants_.filter((cek) => !cek.admin).map((memb) => memb.id);
                 // var adminsCounts = get_participants_.filter((cek) => cek.admin).length   
@@ -1572,11 +1572,11 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         )
                         setTimeout(async() => {
                             for (let i = 0; i < listmember.length; i++) {
-                                await cakrayp.groupParticipantsUpdate(from, [listmember[i]], "remove")
+                                await rama.groupParticipantsUpdate(from, [listmember[i]], "remove")
                             }
                         }, 11000)
                     } else {
-                        cakrayp.sendMessage(from, { text : language_text(
+                        rama.sendMessage(from, { text : language_text(
                             `Apakah anda yakin ingin melakukan perintah ini?\n\n*Catatan:* Perintah *${prefix}kickall* dapat mengeluarkan semua member digroup ini *(durasi 10 detik)*, kecuali admin\n\njika ini memang keputusan anda, silahkan ketik *${prefix}kickall* lagi untuk memulai dalam 10 detik.`,
                             `Are you sure to do this command?\n\n*Note:* The command *${prefix}kickall* can remove all members in this group *(10 seconds duration)*, except admin\n\nIf this is your decision, please feel free to type *${prefix}kickall* again to get started in 10 seconds.`
                         )}, { quoted: msg })
@@ -1591,7 +1591,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (msg.message.extendedTextMessage === null || msg.message.extendedTextMessage.contextInfo.mentionedJid === undefined) return mentions(language_text(`Silakhan di tag user dari target digroup\n\nContoh: *${prefix + command}* @${sender.split('@')[0]}`, `Please tag user from target in group\nExample: *${prefix + command}* @${sender.split('@')[0]}`), [sender], true)
                 var mentionedJid_promote = msg.message.extendedTextMessage.contextInfo.mentionedJid;
                 // console.log(mentionedJid_promote)
-                var group_metaData = await cakrayp.groupMetadata(from)
+                var group_metaData = await rama.groupMetadata(from)
                 var getIsGroupAdmin = group_metaData.participants.filter((x) => x.admin).map((x) => x.id); // for includes, when user has been already a admin
                 txt_promote = `┏━━「 PROMOTE 」\n`
                 txt_promote += `┠❂ Totally : ${mentionedJid_promote.length}\n│\n`
@@ -1600,7 +1600,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_promote += `┠❂➢ @${mentionedJid_promote[i].split('@')[0]} (Admin)\n`
                     } else {
                         txt_promote += `┠❂➢ @${mentionedJid_promote[i].split('@')[0]}\n`
-                        await cakrayp.groupParticipantsUpdate(from, [mentionedJid_promote[i]], command)
+                        await rama.groupParticipantsUpdate(from, [mentionedJid_promote[i]], command)
                     }
                 }
                 txt_promote += `│\n┗━━「 ${Bot_Name} 」`
@@ -1613,7 +1613,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (msg.message.extendedTextMessage === null || msg.message.extendedTextMessage.contextInfo.mentionedJid === undefined) return mentions(language_text(`Silakhan di tag user dari target digroup\n\nContoh: *${prefix + command}* @${sender.split('@')[0]}`, `Please tag user from target in group\nExample: *${prefix + command}* @${sender.split('@')[0]}`), [sender], true)
                 var mentionedJid_demote = msg.message.extendedTextMessage.contextInfo.mentionedJid;
                 // console.log(mentionedJid_demote)
-                var group_metaData = await cakrayp.groupMetadata(from)
+                var group_metaData = await rama.groupMetadata(from)
                 var getIsGroupAdmin = group_metaData.participants.filter((x) => x.admin).map((x) => x.id); // for includes, when user has not been a admin
                 txt_demote = `┏━━「 DEMOTE 」\n`
                 txt_demote += `┠❂ Totally : ${mentionedJid_demote.length}\n│\n`
@@ -1622,7 +1622,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_demote += `┠❂➢ @${mentionedJid_demote[i].split('@')[0]} (Not Admin)\n`
                     } else {
                         txt_demote += `┠❂➢ @${mentionedJid_demote[i].split('@')[0]}\n`
-                        await cakrayp.groupParticipantsUpdate(from, [mentionedJid_demote[i]], command)
+                        await rama.groupParticipantsUpdate(from, [mentionedJid_demote[i]], command)
                     }
                 }
                 txt_demote += `│\n┗━━「 ${Bot_Name} 」`
@@ -1635,7 +1635,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (msg.message.extendedTextMessage === null || msg.message.extendedTextMessage.contextInfo.mentionedJid === undefined) return mentions(language_text(`Silakhan di tag user dari target digroup\n\nContoh: *${prefix + command}* @${sender.split('@')[0]}`, `Please tag user from target in group\nExample: *${prefix + command}* @${sender.split('@')[0]}`), [sender], true)
                 var mentionedJid_promote = msg.message.extendedTextMessage.contextInfo.mentionedJid;
                 // console.log(mentionedJid_promote)
-                var group_metaData = await cakrayp.groupMetadata(from)
+                var group_metaData = await rama.groupMetadata(from)
                 var getIsGroupAdmin = group_metaData.participants.filter((x) => x.admin).map((x) => x.id); // for includes, when user has been already a admin
                 txt_promote = `┏━━「 PROMOTE 」\n`
                 txt_promote += `┠❂ Totally : ${mentionedJid_promote.length}\n│\n`
@@ -1644,7 +1644,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_promote += `┠❂➢ @${mentionedJid_promote[i].split('@')[0]} (Admin)\n`
                     } else {
                         txt_promote += `┠❂➢ @${mentionedJid_promote[i].split('@')[0]}\n`
-                        await cakrayp.groupParticipantsUpdate(from, [mentionedJid_promote[i]], command.slice(1))
+                        await rama.groupParticipantsUpdate(from, [mentionedJid_promote[i]], command.slice(1))
                     }
                 }
                 txt_promote += `│\n┗━━「 ${Bot_Name} 」`
@@ -1657,7 +1657,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (msg.message.extendedTextMessage === null || msg.message.extendedTextMessage.contextInfo.mentionedJid === undefined) return mentions(language_text(`Silakhan di tag user dari target digroup\n\nContoh: *${prefix + command}* @${sender.split('@')[0]}`, `Please tag user from target in group\nExample: *${prefix + command}* @${sender.split('@')[0]}`), [sender], true)
                 var mentionedJid_demote = msg.message.extendedTextMessage.contextInfo.mentionedJid;
                 // console.log(mentionedJid_demote)
-                var group_metaData = await cakrayp.groupMetadata(from)
+                var group_metaData = await rama.groupMetadata(from)
                 var getIsGroupAdmin = group_metaData.participants.filter((x) => x.admin).map((x) => x.id); // for includes, when user hasn't been a admin
                 txt_demote = `┏━━「 DEMOTE 」\n`
                 txt_demote += `┠❂ Totally : ${mentionedJid_demote.length}\n│\n`
@@ -1666,7 +1666,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_demote += `┠❂➢ @${mentionedJid_demote[i].split('@')[0]} (Not Admin)\n`
                     } else {
                         txt_demote += `┠❂➢ @${mentionedJid_demote[i].split('@')[0]}\n`
-                        await cakrayp.groupParticipantsUpdate(from, [mentionedJid_demote[i]], command.slice(1))
+                        await rama.groupParticipantsUpdate(from, [mentionedJid_demote[i]], command.slice(1))
                     }
                 }
                 txt_demote += `│\n┗━━「 ${Bot_Name} 」`
@@ -1677,7 +1677,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isGroupAdmins) return reply(commannd_response('admingroup'))
                 reply(language_text('Terima kasih telah Menggunakan Bot ini, dan jangan Lupa Balik lagi iyaah :)', "Thank you for using the bot, and don't forget to come back again :)"))
                 setTimeout(async () => {
-                    await cakrayp.groupLeave(from)
+                    await rama.groupLeave(from)
                 }, 5000)
                 break
             case 'oleave':
@@ -1694,14 +1694,14 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     lang_leave2 = language_text('Terima kasih telah Menggunakan Bot ini, dan jangan Lupa Balik lagi iyaah :)', "Thank you for using the bot, and don't forget to come back again :)")
                 }
                 if (messagesText.endsWith("@g.us")) {
-                    cakrayp.sendMessage(messagesText, { text: lang_leave }, { quoted: msg }).then(() => setTimeout(() => { cakrayp.sendMessage(from, { text: lang_leave2 }) }, 5000))
+                    rama.sendMessage(messagesText, { text: lang_leave }, { quoted: msg }).then(() => setTimeout(() => { rama.sendMessage(from, { text: lang_leave2 }) }, 5000))
                     setTimeout(async () => {
-                        await cakrayp.groupLeave(messagesText)
+                        await rama.groupLeave(messagesText)
                     }, 10000)
                 } else {
-                    cakrayp.sendMessage(from, { text: lang_leave }, { quoted: msg }).then(() => setTimeout(() => { cakrayp.sendMessage(from, { text: lang_leave2 }) }, 5000))
+                    rama.sendMessage(from, { text: lang_leave }, { quoted: msg }).then(() => setTimeout(() => { rama.sendMessage(from, { text: lang_leave2 }) }, 5000))
                     setTimeout(async () => {
-                        await cakrayp.groupLeave(from)
+                        await rama.groupLeave(from)
                     }, 10000)
                 }
                 break
@@ -1711,7 +1711,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isGroupAdmins || !isOwner) return reply(commannd_response('admin_owner'))
                 if (!isBotGroupAdmins) return reply(commannd_response('bot_admingroup'))
                 if (msg.message.extendedTextMessage?.contextInfo.participant == botNumber) {
-                    cakrayp.sendMessage(from, {
+                    rama.sendMessage(from, {
                         delete: {
                             remoteJid: from,
                             fromMe: true,
@@ -1733,7 +1733,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (linkGc_Regex.test(messagesText)) {
                     const getGroupCode = linkGc_Regex.exec(chats)[1]
                     const queryInvite = async (code) => {
-                        const results = await cakrayp.query({
+                        const results = await rama.query({
                             tag: "iq",
                             attrs: {
                                 type: "get",
@@ -1750,7 +1750,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             // if (check.size < 80) return reply("The minimum requirement for group members must be more than 80 people.");
                             // Trying to join group with given invite code
                             try {
-                                await cakrayp.groupAcceptInvite(getGroupCode)
+                                await rama.groupAcceptInvite(getGroupCode)
                                 reply(language_text('Berhasil untuk bergabung di group.', 'Success to join in the group.'))
                             } catch (err) {
                                 reply(language_text("Sepertinya grup telah penuh atau tidak valid ketika mencoba untuk bergabung :/", "Looks like the group already full or became invalid when I'm trying to join :/"));
@@ -1767,7 +1767,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isOwner) return reply(commannd_response('owner_bot'))
                 if (isImage || isQuotedImage) {
                     let stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
-                    await cakrayp.updateProfilePicture(botNumber, { stream }).then(() => reply(language_text('Berhasil mengganti profile bot', 'Successfully change bot profile.')))
+                    await rama.updateProfilePicture(botNumber, { stream }).then(() => reply(language_text('Berhasil mengganti profile bot', 'Successfully change bot profile.')))
                 } else {
                     reply(language_text(`Silahkan kirim gambar dengan caption *${prefix + command}* sesuai keinginan anda atau tag gambar yang sudah dikirim`, `Please send a picture with caption *${prefix + command}* to your wishes or tag images that have been sent`))
                 }
@@ -1778,7 +1778,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isBotGroupAdmins) return reply(commannd_response('Bot_admingroup'))
                 if (isImage || isQuotedImage) {
                     let stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
-                    await cakrayp.updateProfilePicture(from, { stream }).then(() => {
+                    await rama.updateProfilePicture(from, { stream }).then(() => {
                         mentions(language_text(`Berhasil mengganti foto profile group dari @${sender.split("@")[0]}`, `Successfully to Update group picture from @${sender.split("@")[0]}`), [sender], true)
                     })
                 } else {
@@ -1788,13 +1788,13 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             case 'setgroupdesc':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!messagesText) return reply(language_text(`Silahkan masukkan text untuk ${groupMetadata.desc ? randomArr(['mengganti', 'mengubah']) : 'menambahkan'} deskripsi group terlebih dahulu\n\nContoh: *${prefix + command}* <name>\n*${prefix + command}* hello world`, `Please enter text to ${groupMetadata.desc ? 'change' : 'add'} the group description\n\nE.g: *${prefix + command}* <name>\n*${prefix + command}* hello world`))
-                await cakrayp.groupUpdateDescription(from, messagesText)
+                await rama.groupUpdateDescription(from, messagesText)
                 mentions(language_text(`Berhasil mengganti deskripsi group dari @${sender.split("@")[0]}, Silahkan diketik *${prefix}descgc* untuk melihat deskripsi group tersebut.`, `Successfully to Update group description from @${sender.split("@")[0]}, Please type *${prefix}descgc* to see the group description.`), [sender], true)
                 break
             case 'setgroupname':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!messagesText) return reply(language_text(`Silahkan masukkan nama group terlebih dahulu\n\nContoh: *${prefix + command}* <name>\n*${prefix + command}* hello world`, `Please enter a group name\n\nE.g: *${prefix + command}* <name>\n*${prefix + command}* hello world`))
-                await cakrayp.groupUpdateSubject(from, messagesText)
+                await rama.groupUpdateSubject(from, messagesText)
                 mentions(language_text(`Berhasil mengganti nama group *"${groupName}"* ke *"${messagesText}"* dari @${sender.split("@")[0]}`, `Successfully to Update group name of *"${groupName}"* to *"${args.join(" ")}"* from @${sender.split("@")[0]}`), [sender], true)
                 break
             case 'group':
@@ -1802,12 +1802,12 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isGroupAdmins) return reply(commannd_response('admingroup'))
                 if (!isBotGroupAdmins) return reply(commannd_response('bot_admingroup'))
-                var checkGc = await cakrayp.groupMetadata(from);
+                var checkGc = await rama.groupMetadata(from);
                 if (messagesText === "open") {
                     if (!checkGc.announce) {    // if false
                         reply(language_text('Mohon maaf, group ini telah dibuka, silahkan ditutup terlebih dahulu.', 'Sorry, this group has been opened, please close it first.'))
                     } else {
-                        await cakrayp.groupSettingUpdate(from, 'not_announcement')
+                        await rama.groupSettingUpdate(from, 'not_announcement')
                         mentions(language_text(`*「 GROUP OPEN 」*\nBerhasil membuka group ini dan semua peserta dapat mengirim pesan *${groupName}* dari @${sender.split("@")[0]}`, `*「 GROUP OPEN 」*\nSuccessfully to open this group of *${groupName}* from @${sender.split("@")[0]}`), [sender], true)
                     }
 
@@ -1815,7 +1815,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     if (checkGc.announce) {     // if true
                         reply(language_text('Mohon maaf, group ini telah ditutup oleh Admin!', 'Sorry, this group has been closed by admin!'))
                     } else {
-                        await cakrayp.groupSettingUpdate(from, 'announcement')
+                        await rama.groupSettingUpdate(from, 'announcement')
                         mentions(language_text(`*「 GROUP CLOSE 」*\nBerhasil menutup group ini dan hanya admin dapat mengirim pesan *${groupName}* dari @${sender.split("@")[0]}`, `*「 GROUP CLOSE 」*\nSuccessfully to close this group of *${groupName}* from @${sender.split("@")[0]}`), [sender], true)
                     }
 
@@ -1824,7 +1824,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         { buttonId: `${prefix + command} open`, buttonText: { displayText: 'OPEN' }, type: 1 },
                         { buttonId: `${prefix + command} close`, buttonText: { displayText: 'CLOSE' }, type: 1 },
                     ]
-                    cakrayp.sendMessage(from, {
+                    rama.sendMessage(from, {
                         image: botProfile,
                         caption: language_text(`Silahkan dipilih terlebih dahulu untuk mengubah peraturan digroup.\n\n`, `Please select for settings change here.\n\n`),
                         footer: `${prefix + command} open (open the group)\n${prefix + command} close (close the group)`,
@@ -1837,14 +1837,14 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isGroupAdmins) return reply(commannd_response('admingroup'))
                 // if (!isBotGroupAdmins) return reply(commannd_response('bot_admingroup'))
-                if (messagesText == '-help') return cakrayp.sendMessage(from, {
+                if (messagesText == '-help') return rama.sendMessage(from, {
                     image: fs.readFileSync('./file/img/IMG_20211208_170825.jpg'),
                     caption: language_text(
                         `Anda dapat mengirim foto dan video dengan caption *${prefix + command}* atau direply foto dan video yang telah dikirim, untuk mengirim ke semua member dengan contoh digambar ini`,
                         `You can send photos and videos with the caption *${prefix + command}* or reply to photos and videos that have been sent, to send to all members with this drawn example`
                     )
                 }, { quoted: msg })
-                const member_group = await cakrayp.groupMetadata(from)
+                const member_group = await rama.groupMetadata(from)
                 console.log(member_group)
                 const owner_check = member_group.owner ? `@${member_group.owner.split('@')[0]}` : language_text('tidak diketahui', 'Unknown');
                 const participants___ = member_group['participants']
@@ -1872,7 +1872,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         let makeToSendMessagesObject = {}
                         makeToSendMessagesObject[getMediaMessageTypeOfsendAllMember.replace("Message", "")] = getMediaMetaBuff;
                         makeToSendMessagesObject['caption'] = ini_text;
-                        cakrayp.sendMessage(participants___[i].id, { ...makeToSendMessagesObject, contextInfo: { "mentionedJid": [sender, member_group.owner ? member_group.owner : ""] } })
+                        rama.sendMessage(participants___[i].id, { ...makeToSendMessagesObject, contextInfo: { "mentionedJid": [sender, member_group.owner ? member_group.owner : ""] } })
                     }
                     reply(language_text('Berhasil mengirim pesan ke semua member', 'Success to send all members'))
                 } else {
@@ -1881,7 +1881,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         `Please enter text or send photos and videos with the caption *${prefix + command}* to send to all group members`))
                     for (let i = 0; i < participants___.length; i++) {
                         console.log(participants___[i])
-                        cakrayp.sendMessage(participants___[i].id, { text: ini_text, contextInfo: { "mentionedJid": [sender, member_group.owner ? member_group.owner : ""] } })
+                        rama.sendMessage(participants___[i].id, { text: ini_text, contextInfo: { "mentionedJid": [sender, member_group.owner ? member_group.owner : ""] } })
                     }
                     reply(language_text(
                         `Berhasil mengirim pesan ke semua member, Jangan lupa ditambahkan sebuah -help *${prefix + command} -help* untuk melihat contohnya`,
@@ -1891,10 +1891,10 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             case 'linkgroup':
             case 'linkgc':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
-                cakrayp.groupInviteCode(from)
+                rama.groupInviteCode(from)
                     .then(async (response) => {
-                        const get_ppGc = await cakrayp.profilePictureUrl(from, "image")
-                        cakrayp.sendMessage(from, {
+                        const get_ppGc = await rama.profilePictureUrl(from, "image")
+                        rama.sendMessage(from, {
                             text: `*Name :* ${groupMetadata.subject}\n\n*Link :* https://chat.whatsapp.com/${response}`,
                             contextInfo: {
                                 "externalAdReply": {
@@ -1913,7 +1913,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isGroupAdmins) return reply(commannd_response('admingroup'))
                 if (!isBotGroupAdmins) return reply(commannd_response('bot_admingroup'))
-                let group_data_antilink = await cakrayp.groupMetadata(from)
+                let group_data_antilink = await rama.groupMetadata(from)
                 position = false
                 Object.keys(antilink_).forEach((i) => {
                     if (antilink_[i].groupJid == from) {
@@ -1936,7 +1936,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         { buttonId: `${prefix + command} enable`, buttonText: { displayText: 'ON' }, type: 1 },
                         { buttonId: `${prefix + command} disable`, buttonText: { displayText: 'OFF' }, type: 1 },
                     ]
-                    cakrayp.sendMessage(from, {
+                    rama.sendMessage(from, {
                         image: botProfile,
                         jpegThumbnail: botProfile,
                         caption: language_text(`Silahkan dipilih terlebih dahulu.\n\n`, `Please select first.\n\n`),
@@ -1950,7 +1950,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isGroupAdmins) return reply(commannd_response('admingroup'))
                 if (!isBotGroupAdmins) return reply(commannd_response('bot_admingroup'))
-                let group_data_welcome = await cakrayp.groupMetadata(from)
+                let group_data_welcome = await rama.groupMetadata(from)
                 position = false
                 Object.keys(welcome_).forEach((i) => {
                     if (welcome_[i].groupJid == from) {
@@ -1973,7 +1973,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         { buttonId: `${prefix + command} enable`, buttonText: { displayText: 'ON' }, type: 1 },
                         { buttonId: `${prefix + command} disable`, buttonText: { displayText: 'OFF' }, type: 1 },
                     ]
-                    cakrayp.sendMessage(from, {
+                    rama.sendMessage(from, {
                         image: botProfile,
                         jpegThumbnail: botProfile,
                         caption: language_text(`Silahkan dipilih terlebih dahulu.\n\n`, `Please select first.\n\n`),
@@ -1990,7 +1990,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 if (GroupLinkRegex.test(messagesText)) {
                     const getCodeFromLink = GroupLinkRegex.exec(messagesText)[1]
                     const checkLinkGroup = async (code) => {
-                        const results = await cakrayp.query({
+                        const results = await rama.query({
                             tag: "iq",
                             attrs: {
                                 type: "get",
@@ -2021,7 +2021,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 }
                 break
             case 'infobot':
-                infobot(cakrayp, store)
+                infobot(rama, store)
                     .then(async (data) => {
                         infobot_txt = `*「 INFO BOT 」*\n\n`
                         infobot_txt += `*• Name :* ${data.name}\n`
@@ -2043,10 +2043,10 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         infobot_txt += `*• Memory used :* ${data.activity.memory_used}\n`
                         infobot_txt += `*• CPU :* ${data.activity.cpu}\n`
                         infobot_txt += `*• Disk :* ${data.activity.disk}\n\n`
-                        infobot_txt += `\`\`\`${JSON.stringify(cakrayp.user, 'spaces', 2)}\`\`\`\n\n\n`
+                        infobot_txt += `\`\`\`${JSON.stringify(rama.user, 'spaces', 2)}\`\`\`\n\n\n`
                         infobot_txt += `*• Runtime :*\n${language_text(runtime(process.uptime()), await translate(runtime(process.uptime())))}\n\n`
                         infobot_txt += `© Made by ${author}`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: botProfile,
                             jpegThumbnail: botProfile,
                             caption: infobot_txt
@@ -2056,7 +2056,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             case 'infogroup':
             case 'infogc':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
-                const getGroupInformationFromID = await cakrayp.groupMetadata(from);
+                const getGroupInformationFromID = await rama.groupMetadata(from);
                 const nameGroupFromId = getGroupInformationFromID.subject;
                 const createdAtFromGroup = new Date(getGroupInformationFromID.creation * 1000).toLocaleString('jv');
                 const OwnerFromGroup = getGroupInformationFromID.owner ? getGroupInformationFromID.owner : language_text('Tidak diketahui', 'Unknown');
@@ -2064,7 +2064,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 const participantsFromGroup = getGroupInformationFromID.participants;
                 const descriptionFromGroup = getGroupInformationFromID.desc ? getGroupInformationFromID.desc : '(No description)'
                 try {
-                    var getPicFromGroup = await getBuffer(await cakrayp.profilePictureUrl(getGroupInformationFromID.id, 'image'));
+                    var getPicFromGroup = await getBuffer(await rama.profilePictureUrl(getGroupInformationFromID.id, 'image'));
                 } catch (e) {
                     var getPicFromGroup = fs.readFileSync('./file/img/no_ppuser.jpeg')
                 }
@@ -2078,7 +2078,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 txt_infoGc += `*• AdminCount :* ${participantsFromGroup.filter((x) => x.admin).length}\n`
                 txt_infoGc += `*• Admingroup :* ${isGroupAdmins ? true : false}\n\n`
                 txt_infoGc += `*「 GROUP DESC 」*\n\n${descriptionFromGroup}\n`
-                cakrayp.sendMessage(from, {
+                rama.sendMessage(from, {
                     image: getPicFromGroup,
                     jpegThumbnail: getPicFromGroup,
                     caption: txt_infoGc,
@@ -2113,7 +2113,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                         buttonText: { displayText: `${select_vid.quality} (${select_vid.size})` }, type: 1
                                     }) : false
                                 }
-                                cakrayp.sendMessage(from, {
+                                rama.sendMessage(from, {
                                     image: await getBuffer(thumbnail.standard),
                                     jpegThumbnail: await getBuffer(thumbnail.standard),
                                     caption: txt_video + language_text(`Silahkan dipilih terlebih dahulu.`, `Please select first.`),
@@ -2123,8 +2123,8 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                 })
                             } else {
                                 txt_video += language_text('_Silahkan ditunggu dalam beberapa menit untuk mengirim video tersebut_', '_Please wait for a few minutes to send the video_')
-                                cakrayp.sendMessage(from, { image: { url: thumbnail.standard }, caption: txt_video }).then(async () => {
-                                    cakrayp.sendMessage(from, { video: { url: downloads_video[0].url } }, { quoted: msg })
+                                rama.sendMessage(from, { image: { url: thumbnail.standard }, caption: txt_video }).then(async () => {
+                                    rama.sendMessage(from, { video: { url: downloads_video[0].url } }, { quoted: msg })
                                 })
                             }
                         }).catch(err => {
@@ -2161,7 +2161,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                         buttonText: { displayText: `${select_audio.quality} (${select_audio.size})` }, type: 1
                                     }) : false
                                 }
-                                cakrayp.sendMessage(from, {
+                                rama.sendMessage(from, {
                                     image: await getBuffer(thumbnail.standard),
                                     jpegThumbnail: await getBuffer(thumbnail.standard),
                                     caption: txt_audio + language_text(`Silahkan dipilih terlebih dahulu.`, `Please select first.`),
@@ -2171,8 +2171,8 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                 })
                             } else {
                                 txt_audio += language_text('_Silahkan ditunggu dalam beberapa menit untuk mengirim audio tersebut_', '_Please wait for a few minutes to send the audio_')
-                                cakrayp.sendMessage(from, { image: { url: thumbnail.standard }, caption: txt_audio }).then(async () => {
-                                    cakrayp.sendMessage(from, { audio: { url: downloads_audio[0].url } }, { quoted: msg })
+                                rama.sendMessage(from, { image: { url: thumbnail.standard }, caption: txt_audio }).then(async () => {
+                                    rama.sendMessage(from, { audio: { url: downloads_audio[0].url } }, { quoted: msg })
                                 })
                             }
                         }).catch(err => {
@@ -2207,7 +2207,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             for (let select_vid of data.result.downloads) {
                                 select_vid.url ? buttons.push({ buttonId: `${prefix}getdata -ytdl -video ${select_vid.url} ${select_vid.size.replace(/ +/g, '_')} ${data.result.title.replace(/ +/g, '_')}_(${select_vid.quality.replace(/ +/g, '_')})`, buttonText: { displayText: `${select_vid.quality} (${select_vid.size})` }, type: 1 }) : false
                             }
-                            cakrayp.sendMessage(from, {
+                            rama.sendMessage(from, {
                                 image: await getBuffer(data.result.thumbnail.standard),
                                 jpegThumbnail: await getBuffer(data.result.thumbnail.standard),
                                 caption: txt_video + language_text(`Silahkan dipilih terlebih dahulu.`, `Please select first.`),
@@ -2217,8 +2217,8 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             })
                         } else {
                             txt_video += language_text('_Silahkan ditunggu dalam beberapa menit untuk mengirim video tersebut_', '_Please wait for a few minutes to send the video_')
-                            cakrayp.sendMessage(from, { image: { url: data.result.thumbnail.standard }, caption: txt_video }).then(async () => {
-                                cakrayp.sendMessage(from, { video: { url: downloads_video.url }, mimetype: 'video/mp4' }, { quoted: msg })
+                            rama.sendMessage(from, { image: { url: data.result.thumbnail.standard }, caption: txt_video }).then(async () => {
+                                rama.sendMessage(from, { video: { url: downloads_video.url }, mimetype: 'video/mp4' }, { quoted: msg })
                             })
                         }
                     }).catch(err => {
@@ -2249,7 +2249,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             for (let select_audio of data.result.downloads) {
                                 select_audio.url ? buttons.push({ buttonId: `${prefix}getdata -ytdl -audio ${select_audio.url} ${select_audio.size.replace(/ +/g, '_')} ${data.result.title.replace(/ +/g, '_')}_(${select_audio.quality.replace(/ +/g, '_')})`, buttonText: { displayText: `${select_audio.quality} (${select_audio.size})` }, type: 1 }) : false
                             }
-                            cakrayp.sendMessage(from, {
+                            rama.sendMessage(from, {
                                 image: await getBuffer(data.result.thumbnail.standard),
                                 jpegThumbnail: await getBuffer(data.result.thumbnail.standard),
                                 caption: txt_audio + language_text(`Silahkan dipilih terlebih dahulu.`, `Please select first.`),
@@ -2259,8 +2259,8 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             })
                         } else {
                             txt_audio += language_text('_Silahkan ditunggu dalam beberapa menit untuk mengirim audio tersebut_', '_Please wait for a few minutes to send the audio_')
-                            cakrayp.sendMessage(from, { image: { url: data.result.thumbnail.standard }, caption: txt_audio }, { quoted: msg }).then(async () => {
-                                cakrayp.sendMessage(from, { audio: { url: downloads_audio.url }, mimetype: 'audio/mp4' }, { quoted: msg })
+                            rama.sendMessage(from, { image: { url: data.result.thumbnail.standard }, caption: txt_audio }, { quoted: msg }).then(async () => {
+                                rama.sendMessage(from, { audio: { url: downloads_audio.url }, mimetype: 'audio/mp4' }, { quoted: msg })
                             })
                         }
                     }).catch(err => {
@@ -2281,11 +2281,11 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         ini_txt += `*• Uploaded :* ${result.jooxdata.published}\n`
 
                         // thumbnail = await getBuffer(result.jooxdata.image)
-                        await cakrayp.sendMessage(from, { image: { url: result.jooxdata.image }, jpegThumbnail: result.jooxdata.image, caption: ini_txt }, { quoted: msg }).then(() => {
+                        await rama.sendMessage(from, { image: { url: result.jooxdata.image }, jpegThumbnail: result.jooxdata.image, caption: ini_txt }, { quoted: msg }).then(() => {
                             if (result.jooxdata.lyric === 'No lyric') false
                             else reply(`*「 Lyric 」*\n\n${result.jooxdata.lyric}`)
                         })
-                        await cakrayp.sendMessage(from, { document: await getBuffer(result.linkMp3.url), mimetype: 'audio/mp3', fileName: `${result.jooxdata.title}.mp3` }, { quoted: msg })
+                        await rama.sendMessage(from, { document: await getBuffer(result.linkMp3.url), mimetype: 'audio/mp3', fileName: `${result.jooxdata.title}.mp3` }, { quoted: msg })
                     })
                 break
 
@@ -2305,7 +2305,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                             ))
                                         }, 5000);
                                     } else {
-                                        cakrayp.sendMessage(from, { document: buff_vid, mimetype: 'video/mp4', fileName: args[4].replace(/_/g, ' ') + '.mp4' }, { quoted: msg })
+                                        rama.sendMessage(from, { document: buff_vid, mimetype: 'video/mp4', fileName: args[4].replace(/_/g, ' ') + '.mp4' }, { quoted: msg })
                                     }
                                 }).catch(err => {
                                     reply(language_text('Mohon maaf, file ini telah kedaularsa, Silahkan masukkan data kembali untuk mendownload', 'Sorry, this file has expired. Please enter form again to download.'))
@@ -2321,7 +2321,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                             ))
                                         }, 5000);
                                     } else {
-                                        cakrayp.sendMessage(from, { document: buff_audio, mimetype: 'audio/mp3', fileName: args[4].replace(/_/g, ' ') + '.mp3' }, { quoted: msg })
+                                        rama.sendMessage(from, { document: buff_audio, mimetype: 'audio/mp3', fileName: args[4].replace(/_/g, ' ') + '.mp3' }, { quoted: msg })
                                     }
                                 }).catch(err => {
                                     reply(language_text('Mohon maaf, file ini telah kedaularsa, Silahkan masukkan data kembali untuk mendownload', 'Sorry, this file has expired. Please enter form again to download.'))
@@ -2362,16 +2362,16 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             ini_txt += `*• Location :* ${data.location}\n`
                             ini_txt += `*• Captions :* ${data.caption}\n\n`
                             ini_txt += language_text('_Silahkan ditunggu dalam waktu 5 detik untuk mengirim data..._', '_Waiting for 5 seconds to send an media..._')
-                            cakrayp.sendMessage(from, { image: { url: data.profile_url }, caption: ini_txt, jpegThumbnail: await getBuffer(data.profile_url) }, { quoted: msg }).then(() => {
+                            rama.sendMessage(from, { image: { url: data.profile_url }, caption: ini_txt, jpegThumbnail: await getBuffer(data.profile_url) }, { quoted: msg }).then(() => {
                                 setTimeout(async () => {
                                     if (data.pin_data[0].type == 'video') {
                                         const previewUrl_buff = await getBuffer(data.pin_data[0].previewUrl)
                                         const ini_buffer = await getBuffer(data.pin_data[0].url)
-                                        await cakrayp.sendMessage(from, { image: ini_buffer, jpegThumbnail: previewUrl_buff }, { quoted: msg })
+                                        await rama.sendMessage(from, { image: ini_buffer, jpegThumbnail: previewUrl_buff }, { quoted: msg })
                                     } else if (data.pin_data[3].type == 'image') {
                                         const ini_buffer = await getBuffer(data.pin_data[3].url)
                                         const previewUrl_buff = await getBuffer(data.pin_data[0].url)
-                                        await cakrayp.sendMessage(from, { video: ini_buffer, jpegThumbnail: previewUrl_buff }, { quoted: msg })
+                                        await rama.sendMessage(from, { video: ini_buffer, jpegThumbnail: previewUrl_buff }, { quoted: msg })
                                     }
                                 }, 5500);
                             })
@@ -2394,7 +2394,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     reply(commannd_response('wait'))
                     scrape.ttdownloader(messagesText)
                         .then(async ({ result }) => {
-                            cakrayp.sendMessage(from, { video: { url: result.nowm }, mimetype: 'video/mp4' }, { quoted: msg })
+                            rama.sendMessage(from, { video: { url: result.nowm }, mimetype: 'video/mp4' }, { quoted: msg })
                         }).catch(err => {
                             if (err.code == 419) {
                                 reply(language_text('Mohon maaf, mungkin URL yang anda masukkan itu tidak valid', 'Sorry, maybe the URL you entered is not valid'))
@@ -2430,19 +2430,19 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             txt_igfeed += `*• Captions :*\n${data.caption}\n\n`
                             txt_igfeed += `*• Totally :* ${data.totally}\n\n`
                             txt_igfeed += language_text('_Silahkan ditunggu dalam waktu 5 detik untuk mengirim gambar dan video..._', '_Waiting for 5 seconds to send an videos and photos..._')
-                            cakrayp.sendMessage(from, { image: { url: data.owner.profile_pic }, caption: txt_igfeed, jpegThumbnail: await getBuffer(data.owner.profile_pic) }, { quoted: msg }).then(async () => {
+                            rama.sendMessage(from, { image: { url: data.owner.profile_pic }, caption: txt_igfeed, jpegThumbnail: await getBuffer(data.owner.profile_pic) }, { quoted: msg }).then(async () => {
                                 setTimeout(async () => {
                                     for (let i = 0; i < data.display_url.length; i++) {
                                         const previewUrl = await getBuffer(data.display_url[i].previewUrl);
                                         const mediaType = data.display_url[i].type;
                                         if (mediaType === 'video') {
-                                            await cakrayp.sendMessage(from, {
+                                            await rama.sendMessage(from, {
                                                 video: await getBuffer(data.display_url[i].url),
                                                 jpegThumbnail: previewUrl,
                                                 mimetype: 'video/mp4'
                                             }, { quoted: msg })
                                         } else if (mediaType === 'image') {
-                                            await cakrayp.sendMessage(from, {
+                                            await rama.sendMessage(from, {
                                                 image: await getBuffer(data.display_url[i].url),
                                                 jpegThumbnail: previewUrl,
                                                 mimetype: 'image/jpeg'
@@ -2476,7 +2476,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                 })
                                 .on('end', () => {
                                     fs.unlinkSync('./temp/' + file_input)
-                                    cakrayp.sendMessage(from, { document: fs.readFileSync('./temp/' + file_output), mimetype: 'audio/mp3', fileName: 'file-' + Date.now() + '.mp3' }, { quoted: msg }).then(() => setTimeout(() => fs.unlinkSync('./temp/' + file_output), 3000))
+                                    rama.sendMessage(from, { document: fs.readFileSync('./temp/' + file_output), mimetype: 'audio/mp3', fileName: 'file-' + Date.now() + '.mp3' }, { quoted: msg }).then(() => setTimeout(() => fs.unlinkSync('./temp/' + file_output), 3000))
                                 })
                                 .toFormat('mp3')
                                 .save('./temp/' + file_output)
@@ -2508,8 +2508,8 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             txt_mediafire += `*• PublishedAt :* ${data.published}\n\n`
                             txt_mediafire += `*• DOWNLOAD :*\n${await short(data.downloads)}\n\n`
                             txt_mediafire += language_text('_Silahkan ditunggu dalam beberapa menit untuk mengirim file tersebut..._', '_Please wait for a few minutes to send the file..._')
-                            cakrayp.sendMessage(from, { text: txt_mediafire }, { quoted: msg }).then(async () => {
-                                cakrayp.sendMessage(from, {
+                            rama.sendMessage(from, { text: txt_mediafire }, { quoted: msg }).then(async () => {
+                                rama.sendMessage(from, {
                                     document: await getBuffer(data.downloads),
                                     fileName: data.filename,
                                     mimetype: mimetype.lookup(data.filename)
@@ -2560,7 +2560,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 scrape.pinterest(messagesText.trim())
                     .then(async (images) => {
                         const randomImg = images[Math.floor(Math.random() * images.length)]
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: randomImg },
                             caption: language_text(`*「 PINTEREST 」*\n\nHasil pencarian dari :\n*${messagesText}*`, `*「 PINTEREST 」*\n\nSearch result from :\n*${messagesText}*`),
                             jpegThumbnail: await getBuffer(randomImg)
@@ -2587,7 +2587,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             quality: 75,                    // The quality of the output file
                             background: 'transparent'       // The sticker background color (only for full stickers)
                         })
-                        cakrayp.sendMessage(from, await makeSticker.toMessage(), { quoted: msg })
+                        rama.sendMessage(from, await makeSticker.toMessage(), { quoted: msg })
                     })
                     .catch(err => {
                         reply(language_text("Mohon maaf, stiker yang anda cari tidak ada hasil.", "Sorry, the sticker you were looking for did not find any results."))
@@ -2605,7 +2605,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     ini_tt += `*• Username :* ${pck.username}\n`
                     ini_tt += `*• Link :* ${pck.link}\n\n`
                 }
-                cakrayp.sendMessage(from, { image: get_buffer, jpegThumbnail: get_buffer, caption: ini_tt }, { quoted: msg })
+                rama.sendMessage(from, { image: get_buffer, jpegThumbnail: get_buffer, caption: ini_tt }, { quoted: msg })
                 break
             case 'wallpaper':
             case 'wallpapersearch':
@@ -2614,7 +2614,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 scrape.wallpaperflare(messagesText)
                     .then(async (images) => {
                         const randomImg = images[Math.floor(Math.random() * images.length)]
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: randomImg },
                             jpegThumbnail: await getBuffer(randomImg)
                         }, { quoted: msg })
@@ -2674,7 +2674,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             txt_jooxsearch += '━━━━━━━━━━━━━━━━━━━\n\n'
                         }
                         txt_jooxsearch += `© Made by ${author}`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: await getBuffer(randomArr(random_img)),
                             caption: txt_jooxsearch,
                             jpegThumbnail: await getBuffer(randomArr(random_img))
@@ -2684,7 +2684,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     })
                 break
             case 'igsearch':
-                random_usernameig = randomArr(['njwaputri_', 'hanauraaa_', 'cakrayp_hanauraaa23._', 'cakrayp_jhn'])
+                random_usernameig = randomArr(['njwaputri_', 'hanauraaa_', 'rama_hanauraaa23._', 'rama_jhn'])
                 if (!messagesText) return reply(language_text(
                     `Silahkan masukkan Username IG!\n\nContoh: *${prefix + command}* <username>\n*${prefix + command}* ${random_usernameig}`,
                     `Please enter Instagram Username!\n\nExample: *${prefix + command}* <username>\n*${prefix + command}* ${random_usernameig}`
@@ -2722,7 +2722,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 reply(commannd_response('wait'))
                 scrape.lyrics(messagesText)
                     .then(async (data) => {
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: data.thumb },
                             jpegThumbnail: await getBuffer(data.thumb),
                             caption: `*「 Lyric 」*\n\n${data.lirik}`
@@ -2732,7 +2732,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     })
                 break
             case 'igstory':
-                random_usernameig = randomArr(['njwaputri_', 'hanauraaa_', 'cakrayp_hanauraaa23._', 'cakrayp_jhn'])
+                random_usernameig = randomArr(['njwaputri_', 'hanauraaa_', 'rama_hanauraaa23._', 'rama_jhn'])
                 if (!messagesText) return reply(language_text(
                     `Silahkan masukkan Username IG!\n\nContoh: *${prefix + command}* <username>\n*${prefix + command}* ${random_usernameig}\n*${prefix + command} https://www.instagram.com/${random_usernameig}*`,
                     `Please enter Instagram Username!\n\nExample: *${prefix + command}* <username>\n*${prefix + command}* ${random_usernameig}\n*${prefix + command} https://www.instagram.com/${random_usernameig}*`
@@ -2761,20 +2761,20 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_igstory += `*• Following :* ${data.owner.following}\n\n`
                         txt_igstory += `*• Totally :* ${storiesCount}\n\n`
                         txt_igstory += language_text(`_Silahkan ditunggu dalam ${messageInfo}_`, `_Waiting for ${messageInfo}_`)
-                        cakrayp.sendMessage(from, { image: { url: data.owner.profile_pic }, caption: txt_igstory, jpegThumbnail: await getBuffer(data.owner.profile_pic) }, { quoted: msg }).then(async () => {
+                        rama.sendMessage(from, { image: { url: data.owner.profile_pic }, caption: txt_igstory, jpegThumbnail: await getBuffer(data.owner.profile_pic) }, { quoted: msg }).then(async () => {
                             if (data.stories.message) return setTimeout(() => { reply(data.stories.message) }, 5500)
                             setTimeout(async () => {
                                 for (let i = 0; i < data.stories.length; i++) {
                                     const previewUrl = await getBuffer(data.stories[i].previewUrl);
                                     const mediaType = data.stories[i].type;
                                     if (mediaType === 'video') {
-                                        await cakrayp.sendMessage(from, {
+                                        await rama.sendMessage(from, {
                                             video: await getBuffer(data.stories[i].url),
                                             jpegThumbnail: previewUrl,
                                             mimetype: 'video/mp4'
                                         }, { quoted: msg })
                                     } else if (mediaType === 'image') {
-                                        await cakrayp.sendMessage(from, {
+                                        await rama.sendMessage(from, {
                                             image: await getBuffer(data.stories[i].url),
                                             jpegThumbnail: previewUrl,
                                             mimetype: 'image/jpeg'
@@ -2964,7 +2964,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             fetchJson(`${apiCakra}/api/islamic/quran?surah=${surah[0]}&ayat=${surah[1]}&apikey=${apikeyCakra}`)
                                 .then(async (data) => {
                                     const audio_surah = await getBuffer(data.result.audio.primary)
-                                    cakrayp.sendMessage(from, {
+                                    rama.sendMessage(from, {
                                         audio: audio_surah,
                                         mimetype: "audio/mp4"
                                     }, { quoted: msg })
@@ -3003,7 +3003,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     })
                 break
             case 'asmaulhusna':
-                fetchJson(`https://raw.githubusercontent.com/cakrayp/database-api/main/database/islamic/asmaulhusna.json`)
+                fetchJson(`https://raw.githubusercontent.com/rama/database-api/main/database/islamic/asmaulhusna.json`)
                     .then(async ({ result }) => {
                         ini_txt = `List Asmaulhusna Totally : ${result.length}\n\n`
                         for (let i = 0; i < result.length; i++) {
@@ -3082,7 +3082,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         ini_txt += `━━━━━━━━━━━━━━━━━━━\n\n`
                     }
                     ini_txt += `© Made by ${author}`
-                    cakrayp.sendMessage(from, {
+                    rama.sendMessage(from, {
                         image: { url: response.data.image },
                         caption: ini_txt,
                         jpegThumbnail: await getBuffer(response.data.image)
@@ -3105,7 +3105,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         ini_txt += `━━━━━━━━━━━━━━━━━━━\n\n`
                     }
                     ini_txt += `© Made by ${author}`
-                    cakrayp.sendMessage(from, {
+                    rama.sendMessage(from, {
                         image: { url: response.data.image },
                         caption: ini_txt,
                         jpegThumbnail: await getBuffer(response.data.image)
@@ -3128,7 +3128,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         ini_txt += `━━━━━━━━━━━━━━━━━━━\n\n`
                     }
                     ini_txt += `© Made by ${author}`
-                    cakrayp.sendMessage(from, {
+                    rama.sendMessage(from, {
                         image: { url: response.data.image },
                         caption: ini_txt,
                         jpegThumbnail: await getBuffer(response.data.image)
@@ -3150,7 +3150,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         info_gempa += `*• Kedalaman :* ${kedalaman}\n`
                         info_gempa += `*• Wilayah :* ${Wilayah}\n\n`
                         info_gempa += `© Made by ${author}`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: Map },
                             caption: info_gempa,
                             jpegThumbnail: await getBuffer(Map)
@@ -3182,7 +3182,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             txt_checkShorten += `*• Expands :* ${data.expands}\n`
                             txt_checkShorten += `*• Redirection :* ${data.redirection}\n\n`
                             txt_checkShorten += `© Made by ${author}`
-                            cakrayp.sendMessage(from, {
+                            rama.sendMessage(from, {
                                 image: Web_Screenshot,
                                 caption: txt_checkShorten,
                                 jpegThumbnail: Web_Screenshot
@@ -3215,7 +3215,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 scrape.tebakgambar()
                     .then(async (data) => {
                         let get_tbkgmbr = data[0]
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: await getBuffer(get_tbkgmbr.image),
                             caption: language_text("Silahkan dijawab dengan gambar yang ada diatas dalam 60 detik", "Please answer with the image above in 60 seconds"),
                             jpegThumbnail: await getBuffer(get_tbkgmbr.image)
@@ -3390,7 +3390,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_mlHero += `*● Diamond :* ${get_result.price.diamond}\n\n\n`
                         txt_mlHero += `*「 HISTORY 」*\n\n${get_result.background_story.trim()}\n\n`
                         txt_mlHero += `© Made by ${author}`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: gambar_hero,
                             caption: txt_mlHero,
                             jpegThumbnail: gambar_hero
@@ -3528,7 +3528,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 scrape.pinterest(command)
                     .then(async (images) => {
                         const randImg = images[Math.floor(Math.random() * images.length)]
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: randImg },
                             jpegThumbnail: await getBuffer(randImg),
                         }, { quoted: msg })
@@ -3539,7 +3539,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     .then(async (data) => {
                         Object.keys(data).forEach(async (takePic) => {
                             const getImageCouple = await getBuffer(data[takePic])
-                            cakrayp.sendMessage(from, {
+                            rama.sendMessage(from, {
                                 image: getImageCouple,
                                 jpegThumbnail: getImageCouple,
                                 caption: takePic
@@ -3554,7 +3554,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             // Media stalking
             case 'igstalk':
             case 'stalkig':
-                random_usernameig = randomArr(['njwaputri_', 'hanauraaa_', 'cakrayp_hanauraaa23._', 'cakrayp_jhn'])
+                random_usernameig = randomArr(['njwaputri_', 'hanauraaa_', 'rama_hanauraaa23._', 'rama_jhn'])
                 if (!messagesText) return reply(language_text(
                     `Silahkan masukkan Username IG!\n\nContoh: *${prefix + command}* <username>\n*${prefix + command}* ${random_usernameig}\n*${prefox + command} https://www.instagram.com/${random_usernameig}*`,
                     `Please enter Instagram Username!\n\nExample: *${prefix + command}* <username>\n*${prefix + command}* ${random_usernameig}\n*${prefox + command} https://www.instagram.com/${random_usernameig}*`
@@ -3582,7 +3582,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_igstalk += `*• Biography :* ${data.biography}\n`
                         txt_igstalk += `*• External Link:*\n${data.mediadata.external_link}\n\n\n`
                         txt_igstalk += `*Link Profile URL*\n${await short(data.profile_url)}`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: data.profile_pic },
                             jpegThumbnail: await getBuffer(data.profile_pic),
                             caption: txt_igstalk
@@ -3593,7 +3593,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 break
             case 'githubstalk':
             case 'stalkgithub':
-                if (args.length == 0) return reply(language_text(`Silahkan masukkan Username Github!\n\nContoh: *${prefix + command}* <username>\n*${prefix + command}* cakrayp`, `Please enter Github Username!\n\nExample: *${prefix + command}* <username>\n*${prefix + command}* cakrayp`))
+                if (args.length == 0) return reply(language_text(`Silahkan masukkan Username Github!\n\nContoh: *${prefix + command}* <username>\n*${prefix + command}* rama`, `Please enter Github Username!\n\nExample: *${prefix + command}* <username>\n*${prefix + command}* rama`))
                 fetchJson(`https://api.github.com/users/${username}`)
                     .then(async (github_stalker) => {
                         if (github_stalker.status == 404) return reply(language_text('Mohon maaf, username yang anda cari tidak ditemukan', 'Sorry, the username you were looking for could not be found'))
@@ -3626,7 +3626,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_gitstalker += `*• Created At :* ${new Date(get_resultGit.created_At * 1000).toDateString()}\n`
                         txt_gitstalker += `*• Bio :* ${get_resultGit.bio}\n\n\n`
                         txt_gitstalker += `*Link Profile URL*\n${await short(get_resultGit.html_url)}`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: get_resultGit.avatar_url },
                             jpegThumbnail: await getBuffer(get_resultGit.avatar_url),
                             caption: txt_gitstalker
@@ -3650,7 +3650,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_ytstalk += `*• Subcribers :* ${subCount}\n`
                         txt_ytstalk += `*• Sublabel :* ${subCountLabel}\n\n\n`
                         txt_ytstalk += `*Link Profile URL*\n${await short(url)}`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: img_buffer,
                             jpegThumbnail: img_buffer,
                             caption: txt_ytstalk
@@ -3699,7 +3699,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 // Convert stream to buffer.
                 streamToBuffer(gtts_stream, async (err, buff) => {
                     const { ext, mime } = await fromBuffer(buff);
-                    cakrayp.sendMessage(from, {
+                    rama.sendMessage(from, {
                         audio: buff,
                         mimetype: mime,
                         fileName: 'PTT-' + Date.now() + '.' + ext,
@@ -3822,11 +3822,11 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             wait_txt += `*• Episode :* ${get_anime_data.episode.toString()}\n`
                             wait_txt += `*• Similarity :* ${(get_anime_data.similarity).toFixed(1)}%\n\n\n`
                             wait_txt += `*ANIME VIDEO :*\n${await short(get_anime_data.video)}`
-                            cakrayp.sendMessage(from, { image: { url: get_anime_data.image }, caption: wait_txt, jpegThumbnail: await getBuffer(get_anime_data.image), }, { quoted: msg }).then(() => {
+                            rama.sendMessage(from, { image: { url: get_anime_data.image }, caption: wait_txt, jpegThumbnail: await getBuffer(get_anime_data.image), }, { quoted: msg }).then(() => {
                                 setTimeout(() => {
                                     exec(`${ffmpegPath} -i ./temp/${file_name} ./temp/${file_name2}`, async (stderr) => {
                                         fs.unlinkSync(`./temp/${file_name}`)
-                                        await cakrayp.sendMessage(from, { video: fs.readFileSync(`./temp/${file_name2}`) }, { quoted: msg })
+                                        await rama.sendMessage(from, { video: fs.readFileSync(`./temp/${file_name2}`) }, { quoted: msg })
                                     })
                                 }, 2500);
                             })
@@ -3857,7 +3857,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             txt_manga += `*• ${x.title} (${x.date})*\n`
                             txt_manga += `${await shortLink(x.link)}\n`
                         }
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: thumbnail,
                             jpegThumbnail: thumbnail,
                             caption: txt_manga
@@ -3895,7 +3895,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                 txt_kusonime += `${await shortLink(y.download_link)}\n`
                             }
                         }
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: get_buffer,
                             jpegThumbnail: get_buffer,
                             caption: txt_kusonime
@@ -3950,7 +3950,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         txt_pasangan += `*• Positif :* ${positif}\n`
                         txt_pasangan += `*• Negatif :* ${negatif}\n\n`
                         txt_pasangan += `*Note:* Deskripsi ada didalam text negatif.`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: love },
                             jpegThumbnail: await getBuffer(love),
                             caption: txt_pasangan
@@ -4005,7 +4005,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     .then(async ({ penjelasan, statistik }) => {
                         txt_weton = `*「 WETON REJEKI HOKI 」*\n\n`
                         txt_weton += `${penjelasan}`
-                        cakrayp.sendMessage(from, {
+                        rama.sendMessage(from, {
                             image: { url: statistik },
                             jpegThumbnail: await getBuffer(statistik),
                             caption: txt_weton
@@ -4058,7 +4058,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         quality: 75,                    // The quality of the output file
                         background: 'transparent'       // The sticker background color (only for full stickers)
                     })
-                    cakrayp.sendMessage(from, await sticker.toMessage(), { quoted: msg })
+                    rama.sendMessage(from, await sticker.toMessage(), { quoted: msg })
 
                 } else if (isVideo || isQuotedVideo) {
                     if (isQuotedVideo ? msg.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds > 15 : msg.message.videoMessage.seconds > 15) return reply('too long duration, max 15 seconds')
@@ -4075,7 +4075,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         quality: 75,                    // The quality of the output file
                         background: 'transparent'       // The sticker background color (only for full stickers)
                     })
-                    cakrayp.sendMessage(from, await sticker.toMessage(), { quoted: msg })
+                    rama.sendMessage(from, await sticker.toMessage(), { quoted: msg })
                 } else {
                     reply(language_text(`Silahkan Kirim gambar dengan caption *${prefix + command}* atau reply gambar yang sudah dikirim`, `Please Send pictures with caption *${prefix}sticker* or reply to the image that has been sent`))
                 }
@@ -4108,7 +4108,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             quality: 75,                    // The quality of the output file
                             background: 'transparent'       // The sticker background color (only for full stickers)
                         })
-                        cakrayp.sendMessage(from, await sticker.toMessage(), { quoted: msg })
+                        rama.sendMessage(from, await sticker.toMessage(), { quoted: msg })
                     }).catch(err => {
                         console.log(err)
                         reply(language_text('Mohon maaf, emoji ini mungkin tidak ada atau kelebihan hanya cukup satu emoji saja.', 'Sorry, this emoji may not exist or the advantages of only one emoji is enough.'))
@@ -4142,7 +4142,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                 quality: 75,                    // The quality of the output file
                                 background: 'transparent'       // The sticker background color (only for full stickers)
                             })
-                            cakrayp.sendMessage(from, await sticker.toMessage(), { quoted: msg })
+                            rama.sendMessage(from, await sticker.toMessage(), { quoted: msg })
                         })
                         .catch(err => {
                             if (err.code == 403) {
@@ -4173,7 +4173,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             quality: 75,                    // The quality of the output file
                             background: 'transparent'       // The sticker background color (only for full stickers)
                         })
-                        cakrayp.sendMessage(from, await sticker.toMessage(), { quoted: msg })
+                        rama.sendMessage(from, await sticker.toMessage(), { quoted: msg })
                     }).catch(err => {
                         reply(commannd_response('error'))
                     })
@@ -4190,7 +4190,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         const { ext, mime } = await fromBuffer(fs.readFileSync(`./temp/${output_file}`))
                         if (!stderr) {
                             fs.unlinkSync(`./temp/${input_file}`)
-                            cakrayp.sendMessage(from, {
+                            rama.sendMessage(from, {
                                 document: fs.readFileSync(`./temp/${output_file}`),
                                 mimetype: mime,
                             }, { quoted: msg })
@@ -4213,7 +4213,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                             if (ext == 'apng') {
                                 reply(language_text(`Mohon maaf, stiker ini berisi dalam video/gif, dan anda dapat menggunakan perintah *${prefix}tomp4* untuk mengconvert ke video tersebut`, `Sorry, this sticker is contained in a video/gif, and you can use the command *${prefix}tomp4* to convert to the video`))
                             } else {
-                                cakrayp.sendMessage(from, { image: get_buffer, jpegThumbnail: get_buffer, mimetype: mime }, { quoted: msg })
+                                rama.sendMessage(from, { image: get_buffer, jpegThumbnail: get_buffer, mimetype: mime }, { quoted: msg })
                             }
                         })
                         .catch(err => {
@@ -4229,7 +4229,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     try {
                         reply(commannd_response('wait'))
                         let file_stream = await downloadContentFromMessage(msg.message.extendedTextMessage?.contextInfo.quotedMessage.stickerMessage, 'sticker')
-                        cakrayp.sendMessage(from, { video: { url: await ezgif.webpToFile(file_stream, "mp4") }, mimetype: 'video/mp4' }, { quoted: msg })
+                        rama.sendMessage(from, { video: { url: await ezgif.webpToFile(file_stream, "mp4") }, mimetype: 'video/mp4' }, { quoted: msg })
                     } catch (err) {
                         reply(language_text('Mohon maaf sticker ini tidak dapat diconvert ke video', 'Sorry, this sticker cannot be converted to video'))
                     }
@@ -4240,7 +4240,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                 reply(commannd_response('wait'))
                                 ezgif.webpToFile(messagesText, "mp4")
                                     .then(async (video_result) => {
-                                        cakrayp.sendMessage(from, { video: { url: video_result }, mimetype: "video/mp4" }, { quoted: msg })
+                                        rama.sendMessage(from, { video: { url: video_result }, mimetype: "video/mp4" }, { quoted: msg })
                                     })
                                     .catch(err => {
                                         console.log(err)
@@ -4280,7 +4280,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                         })
                         .on('end', () => {
                             fs.unlinkSync('./temp/' + file_input)
-                            cakrayp.sendMessage(from, { audio: fs.readFileSync('./temp/' + file_output), mimetype: 'audio/mp4' }, { quoted: msg }).then(() => setTimeout(() => fs.unlinkSync('./temp/' + file_output), 3000))
+                            rama.sendMessage(from, { audio: fs.readFileSync('./temp/' + file_output), mimetype: 'audio/mp4' }, { quoted: msg }).then(() => setTimeout(() => fs.unlinkSync('./temp/' + file_output), 3000))
                         })
                         .toFormat('mp3')
                         .save('./temp/' + file_output)
@@ -4354,7 +4354,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 ini_txt = args.join(" ")
                 textmaker.textpro(command.toLowerCase(), ini_txt)
                     .then(async (get_result) => {
-                        cakrayp.sendMessage(from, { image: await getBuffer(get_result) }, { quoted: rey })
+                        rama.sendMessage(from, { image: await getBuffer(get_result) }, { quoted: rey })
                     }).catch(err => {
                         // console.log(err)
                         if (err.message == 'Theme is not avaiable!') return reply(language_text('Mohon maaf theme ini tidak tersedia.', 'Sorry this theme is not avaiable.'))
@@ -4392,7 +4392,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 ))
                 textmaker.textpro(command.toLowerCase(), txt1.trim(), txt2.trim())
                     .then(async (get_result) => {
-                        cakrayp.sendMessage(from, { image: await getBuffer(get_result) }, { quoted: msg })
+                        rama.sendMessage(from, { image: await getBuffer(get_result) }, { quoted: msg })
                     }).catch(err => {
                         if (err.message == 'Theme is not avaiable!') return reply(language_text('Mohon maaf theme ini tidak tersedia.', 'Sorry this theme is not avaiable.'))
                         if (err.message == 'Text2 are required!') return reply(language_text(
