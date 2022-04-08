@@ -7,6 +7,7 @@
 const {
     downloadContentFromMessage,
     generateWAMessageFromContent,
+    prepareWAMessageMedia,
     getBinaryNodeChild,
     proto,
     URL_REGEX,
