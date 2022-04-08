@@ -647,7 +647,7 @@ module.exports = async (rama, store, msg) => {
 
 
         // Message Buttons
-        const templateButtons_menu = [
+       /* const templateButtons_menu = [
             { index: 1, urlButton: { displayText: 'O W N E R', url: 'wa.me/6281515589573' } },
             { index: 2, callButton: { displayText: 'Contact', phoneNumber: `+${ownerNumber}` } },
              }, {
@@ -664,7 +664,7 @@ module.exports = async (rama, store, msg) => {
                                 quickReplyButton: {
                                     displayText: 'U S E C M D',
                                     id: 'command'
-                                }]
+                                }]*/
 
 
         // COMMAND
