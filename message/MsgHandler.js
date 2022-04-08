@@ -681,7 +681,7 @@ module.exports = async (rama, store, msg) => {
 │
 ├• *Prefix :* \`\`\`"${multi ? '(multi)' : prefix}"\`\`\`
 │
-├─ *#LIST MENU*
+├─ *LIST MENU*
 ├• *${prefix}menuislamic*
 ├• *${prefix}menudownloader*
 ├• *${prefix}menuconverter*
@@ -723,12 +723,12 @@ let btn = [{
                             }, {
                                 quickReplyButton: {
                                     displayText: 'D O N A T E',
-                                    id: 'donate'
+                                    id: '/donate'
                                 }
                             }, {
                                 quickReplyButton: {
                                     displayText: 'O W N E R',
-                                    id: 'owner'
+                                    id: '/owner'
                                 }                                                       
                             }]            
                 send5ButImg(from, menuhh, "R-BOT", botProfile, btn)                     
@@ -1013,6 +1013,9 @@ break
             case 'menugroup':
                 send5ButImg(from, helpmenu.listgroup(prefix), `${caption}`, botProfile, buttonSh)                    
                 break
+             case 'menuowner':
+                send5ButImg(from, helpmenu.listOwner(prefix), `${caption}`, botProfile, buttonSh)                    
+                break
             case 'linkbotgc':
                 linknya = `${botgrup}`
                 teks = language_text('Jangan lupa untuk bergabung digroup kami iya\n\n' + linknya, 'Come join our group, okay.\n\n' + linknya)
@@ -1030,7 +1033,7 @@ break
                 const vcard = 'BEGIN:VCARD\n' // metadata of the contact card
                     + 'VERSION:3.0\n'
                     + 'FN:' + ownerName + '\n' // full name
-                    + 'ORG:Ashoka Uni;\n' // the organization of the contact
+                    + 'ORG: Owner Ku😅;\n' // the organization of the contact
                     + 'TEL;type=CELL;type=VOICE;waid=' + ownerNumber + ':+' + ownerNumber + '\n' // WhatsApp ID + phone number
                     + 'END:VCARD'
                 await rama.sendMessage(from, {
