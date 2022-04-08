@@ -39,7 +39,25 @@ const helpmenu = require('../help/help')
 const helpbot = require('../help/help-bot/index')
 const rules = require('../help/rules')
 const History = require('../help/aboutMyself')
+let buttonSh = [{
+                                urlButton: {
+                                    displayText: 'C R E A T O R',
+                                    url: 'https://wa.me/message/SQK64PRUWO5FH1'
+                                }
+                            }, {
+                                quickReplyButton: {
+                                    displayText: 'D O N A T E',
+                                    id: 'donate'
+                                }
+                            }, {
+                                quickReplyButton: {
+                                    displayText: 'O W N E R',
+                                    id: 'owner'
+                                }                                                       
+                            }]            
 
+caption = `R-BOT`
+botgrup = `Ga ada`
 // ------>  library  <------
 const { exit, stderr, stdout } = require("process")
 const { exec } = require('child_process')
@@ -98,7 +116,7 @@ function prefix_command(chats) {
         return arr[Math.floor(Math.random() * arr.length)]
     }
     if (multi) {
-        var multi_prefix = /^[°zZ#$@+,.?=''():√%!¢£¥€π¤ΠΦ_&<`™©®Δ^βα¦|/\\©^]/.test(chats) ? chats.match(/^[°zZ#$@+,.?=''():√%¢£¥€π¤ΠΦ_&<!`™©®Δ^βα¦|/\\©^]/gi) : randomArr(['.', '/', '#', '$']);
+        var multi_prefix = /^[°zZ#$@+,.?=''():√%!¢£¥€π¤ΠΦ_&<`™©®Δ^βα¦|/\\©^]/.test(chats) ? chats.match(/^[°zZ#$@+,.?=''():√%¢£¥€π¤ΠΦ_&<!`™©®Δ^βα¦|/\\©^]/gi) : randomArr(['.', '/', '#', '$','','!','.','🐦','🐤','🗿','*','#','&','+','/','@','¥','∆']);
     } else {
         var multi_prefix = prefix
     }
@@ -223,7 +241,20 @@ module.exports = async (rama, store, msg) => {
                     .catch(reject)
             })
         }
-
+   const send5ButImg = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
+        let message = await prepareWAMessageMedia({ image: img }, { upload: rama.waUploadToServer })
+        var template = generateWAMessageFromContent(from, proto.Message.fromObject({
+        templateMessage: {
+        hydratedTemplate: {
+        imageMessage: message.imageMessage,
+               "hydratedContentText": text,
+               "hydratedFooterText": footer,
+               "hydratedButtons": but
+            }
+            }
+            }), options)
+            rama.relayMessage(jid, template.message, { messageId: template.key.id })
+    }
         const checkLanguageCode = (code) => {
             const language_code = [
                 "af", "ar", "sq", "hy", "ca", "zh", "zh-cn", "zh-tw", "zh-yue", "hr", "cs", "da", "nl",
@@ -619,10 +650,21 @@ module.exports = async (rama, store, msg) => {
         const templateButtons_menu = [
             { index: 1, urlButton: { displayText: 'O W N E R', url: 'wa.me/6281515589573' } },
             { index: 2, callButton: { displayText: 'Contact', phoneNumber: `+${ownerNumber}` } },
-            { index: 3, quickReplyButton: { displayText: 'Menu', id: `${prefix}cmd` } },
-            { index: 4, quickReplyButton: { displayText: 'Allmenu', id: `${prefix}allmenu` } },
-            { index: 5, quickReplyButton: { displayText: 'Join in My group', id: `${prefix}linkbotgc` } },
-        ]
+             }, {
+                                quickReplyButton: {
+                                    displayText: 'S E W A',
+                                    id: 'sewabot'
+                                }
+                            }, {
+                                quickReplyButton: {
+                                    displayText: 'O W N E R',
+                                    id: 'owner'
+                                }      
+                            },{
+                                quickReplyButton: {
+                                    displayText: 'U S E C M D',
+                                    id: 'command'
+                                }]
 
 
         // COMMAND
@@ -630,18 +672,67 @@ module.exports = async (rama, store, msg) => {
             case 'menu':
             case 'help':
                 const salam = moment(new Date(msg.messageTimestamp * 1000)).tz('Asia/Jakarta').format('HH')
-                const menu_lang = {
-                    id: `*「 ${Bot_Name} 」*\n\nHai kak ${pushname}.\n\nSelamat ${Clockset.swichtime(salam)} Silahkan dipilih fitur di *${prefix}menu* untuk memulai dari setiap perintah, jika tombol ini tidak merespon anda dapat memilih perintah dibawah berikut ini.\n\n*${prefix}cmd*\n*${prefix}allmenu*\n\njangan lupa berdonasi agar tetap terupdate`,
-                    en: `*「 ${Bot_Name} 」*\n\nHi ${pushname}.\n\n${await translate(`Selamat ${Clockset.swichtime(salam)}`)} Please select a feature in *${prefix}menu* to start from every command, if this button does not respond you can choose the following command.\n\n*${prefix}cmd*\n*${prefix}allmenu*\n\ndon't forget to donate to stay updated`
-                }
-                rama.sendMessage(from, {
-                    caption: language_text(menu_lang.id, menu_lang.en),
-                    jpegThumbnail: botProfile,
-                    footer: language_text('Silahkan dipilih tombol dibawah', 'Please choose here in below.'),
-                    templateButtons: templateButtons_menu,
-                    image: botProfile
-                })
+                 menuhh = `┌─「 MENU COMMAND 」
+│ 
+├• *Name :* ${Bot_Name}
+├• *Owner :* wa.me/${ownerNumber}
+├• *Lib :* @adiwajshing/baileys-md
+│
+├• *Prefix :* \`\`\`"${multi ? '(multi)' : prefix}"\`\`\`
+│
+├─ *#LIST MENU*
+├• *${prefix}menuislamic*
+├• *${prefix}menudownloader*
+├• *${prefix}menuconverter*
+├• *${prefix}menusearching*
+├• *${prefix}menurandomtext*
+├• *${prefix}menuanime*
+├• *${prefix}menumedia*
+├• *${prefix}menuinformasi*
+├• *${prefix}menuentertaiment*
+├• *${prefix}menucreator*
+├• *${prefix}menugoogle*
+├• *${prefix}menuprimbon*
+├• *${prefix}menutextpro*
+├• *${prefix}menurandomimg*
+├• *${prefix}menugroup*
+├• *${prefix}menuadmin*
+├• *${prefix}menuowner*
+├• *${prefix}helpbot* [Command menu options]
+│
+├─ *#ABOUT BOT*
+├• *${prefix}donate*
+├• *${prefix}owner*
+├• *${prefix}socialmedia*
+├• *${prefix}aboutbot*
+├• *${prefix}runtime*
+├• *${prefix}ping*
+├• *${prefix}infobot*
+├• *${prefix}tos*
+│
+├• *Runtime*
+├ ${language_text(runtime(process.uptime()), await translate(runtime(process.uptime())))}
+│
+└──「 ${Bot_Name} 」`    
+let btn = [{
+                                urlButton: {
+                                    displayText: 'C R E A T O R',
+                                    url: 'https://wa.me/message/SQK64PRUWO5FH1'
+                                }
+                            }, {
+                                quickReplyButton: {
+                                    displayText: 'D O N A T E',
+                                    id: 'donate'
+                                }
+                            }, {
+                                quickReplyButton: {
+                                    displayText: 'O W N E R',
+                                    id: 'owner'
+                                }                                                       
+                            }]            
+                send5ButImg(from, menuhh, "R-BOT", botProfile, btn)                     
                 break;
+/*                
 case 'command':
 let sectionnya= [{
 								"title": "GRUP FITUR",
@@ -794,7 +885,7 @@ let sectionnya= [{
 								]
 							}
 						]
-rama.sendList(m.chat, `Halo ${pushname}`, `BOT MENU
+rama.sendList(from, `Halo ${pushname}`, `BOT MENU
 
 LIBRAY:  *BAILEYS MD*`, "R-BOT", "CLICK HERE ", sectionnya, { quoted: m})
 break                
@@ -855,7 +946,7 @@ break
                 rama.sendMessage(from, {
                     caption: menunya,
                     footer: language_text('Jangan lupa berdonasi agar tetap update', 'Don\'t forget to donate to stay updated.'),
-                    templateButtons: [
+                    template//buttons: [
                         { index: 1, callButton: { displayText: 'Contact', phoneNumber: '+' + ownerNumber } },
                         { index: 2, quickReplyButton: { displayText: 'Donate', id: `${prefix}donate` } },
                         { index: 3, quickReplyButton: { displayText: 'Owner', id: `${prefix}owner` } },
@@ -867,211 +958,62 @@ break
                 break
 */
             case 'allmenu':
-                rama.sendMessage(from, {
-                    caption: allmenu(pushname, isIndonesian, language, Clockset.swichtime(moment(new Date()).format('HH')), time, prefix),
-                    footer: language_text('Jangan lupa berdonasi agar tetap update', 'Don\'t forget to donate to stay updated.'),
-                    templateButtons: [
-                        { index: 1, callButton: { displayText: 'Contact', phoneNumber: '+' + ownerNumber } },
-                        { index: 2, quickReplyButton: { displayText: 'Donate', id: `${prefix}donate` } },
-                        { index: 3, quickReplyButton: { displayText: 'Owner', id: `${prefix}owner` } },
-                    ],
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, allmenu(pushname, isIndonesian, language, Clockset.swichtime(moment(new Date()).format('HH')), time, prefix), `${caption}`, botProfile, buttonSh)                  
                 break
             case 'menuislamic':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listislami(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Islamic' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listislami(prefix), `${caption}`, botProfile, buttonSh)                    
                 break
             case 'menuadmin':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listAdminGroup(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Admin Group' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listAdminGroup(prefix), `${caption}`, botProfile, buttonSh)                                
                 break
             case 'menudownloader':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listdownloader(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Downloader' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listdownloader(prefix), `${caption}`, botProfile, buttonSh)                                
                 break
             case 'menuconverter':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listconvert(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Converter' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listconvert(prefix), `${caption}`, botProfile, buttonSh)             
                 break
             case 'menusearching':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listsearch(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Searching' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listsearch(prefix), `${caption}`, botProfile, buttonSh)               
                 break
             case 'menurandomtext':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listrandom(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Text Random' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listrandom(prefix), `${caption}`, botProfile, buttonSh)                     
                 break
             case 'menuanime':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listmanga(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Anime' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listmanga(prefix), `${caption}`, botProfile, buttonSh)                     
                 break
             case 'menumedia':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listmedsos(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Media' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listmedsos(prefix), `${caption}`, botProfile, buttonSh)                     
                 break
             case 'menuinformasi':
-            case 'menuinformation':
-                // rama.sendMessage(from, {
-                //     image: botProfile,
-                //     jpegThumbnail: botProfile,
-                //     caption: helpmenu.listinfomation(prefix),
-                //     footer: `${prefix}helpbot ${command}`,
-                //     buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Information' }, type: 1 }],
-                //     headerType: 4,
-                //     contextInfo: { mentionedJid: [sender] }
-                // })
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listinfomation(prefix),
-                }, { quoted: msg })
+            case 'menuinformation':                
+                send5ButImg(from, helpmenu.listinfomation(prefix), `${caption}`, botProfile, buttonSh)                     
                 break
             case 'menuentertaiment':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listentertaiment(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Entertaiment' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listentertaiment(prefix), `${caption}`, botProfile, buttonSh)                      
                 break
             case 'menucreator':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listcreator(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Creator' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listcreator(prefix), `${caption}`, botProfile, buttonSh)                     
                 break
             case 'menugoogle':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listgoogle(prefix),
-                }, { quoted: msg })
+                send5ButImg(from, helpmenu.listgoogle(prefix), `${caption}`, botProfile, buttonSh)                      
                 break
             case 'menuprimbon':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listprimbon(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Primbon' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listprimbon(prefix), `${caption}`, botProfile, buttonSh)                      
                 break
             case 'menutextpro':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listtextpro(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Textpro' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listtextpro(prefix), `${caption}`, botProfile, buttonSh)                     
                 break
             case 'menuphotoxy':
-                // rama.sendMessage(from, {
-                //     image: botProfile,
-                //     jpegThumbnail: botProfile,
-                //     caption: helpmenu.listphotoxy(prefix),
-                //     footer: `${prefix}helpbot ${command}`,
-                //     buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Admin Group' }, type: 1 }],
-                //     headerType: 4,
-                //     contextInfo: { mentionedJid: [sender] }
-                // })
-                reply(commannd_response('mainstance'))
+                send5ButImg(from, helpmenu.listphotoxy(prefix), `${caption}`, botProfile, buttonSh)
                 break
             case 'menurandomimg':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listrandomimage(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Random' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listrandomimage(prefix), `${caption}`, botProfile, buttonSh)
                 break
             case 'menugroup':
-                rama.sendMessage(from, {
-                    image: botProfile,
-                    jpegThumbnail: botProfile,
-                    caption: helpmenu.listgroup(prefix),
-                    footer: `${prefix}helpbot ${command}`,
-                    buttons: [{ buttonId: `${prefix}helpbot ${command}`, buttonText: { displayText: 'Help Admin Group' }, type: 1 }],
-                    headerType: 4,
-                    contextInfo: { mentionedJid: [sender] }
-                })
+                send5ButImg(from, helpmenu.listgroup(prefix), `${caption}`, botProfile, buttonSh)                    
                 break
             case 'linkbotgc':
-                linknya = 'https://chat.whatsapp.com/LVkPTvaxjRlE3c5azivEpk'
+                linknya = `${botgrup}`
                 teks = language_text('Jangan lupa untuk bergabung digroup kami iya\n\n' + linknya, 'Come join our group, okay.\n\n' + linknya)
                 reply(teks)
                 break
