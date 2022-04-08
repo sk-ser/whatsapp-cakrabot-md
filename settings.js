@@ -35,7 +35,7 @@ global.setFfmpegPath = true
 
 // Other
 global.ownerNumber = '6281515589573'   // Owner Bot, You can change to your phone number without "+" and "-"
-global.ownerName = 'Cakra Yp'   // Owner name
+global.ownerName = 'RamaGans'   // Owner name
 global.BotName = 'R-BOT'   // Bot Name
 global.prefix = '/'   // Set prefix command
 global.language = 'all'  //  You can change this language for all text with "all" --> ['id', 'en', 'all']
