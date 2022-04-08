@@ -14,7 +14,7 @@ exports.listmenuBot = (prefix) => {
 ├ • *${prefix}ping*
 ├ • *${prefix}aboutbot*
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listislami = (prefix) => {
@@ -31,7 +31,7 @@ exports.listislami = (prefix) => {
 ├ • *${prefix}kisahnabi* [nama_nabi]
 ├ • *${prefix}jadwalsholat* [daerah]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listdownloader = (prefix) => {
@@ -54,7 +54,7 @@ exports.listdownloader = (prefix) => {
 ├ • *${prefix}mediafire* [url_mediafire]
 ├ • *${prefix}zippyshare* [url_zippyshare]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listsearch = (prefix) => {
@@ -72,7 +72,7 @@ exports.listsearch = (prefix) => {
 ├ • *${prefix}stickerwa* [query]
 ├ • *${prefix}playstore* [query]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listrandom = (prefix) => {
@@ -90,7 +90,7 @@ exports.listrandom = (prefix) => {
 ├ • *${prefix}bucin*
 ├ • *${prefix}randomnama*
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listmanga = (prefix) => {
@@ -101,7 +101,7 @@ exports.listmanga = (prefix) => {
 ├ • *${prefix}manga* [query]
 ├ • *${prefix}kusonimesearch* [query] 
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listgoogle = (prefix) => {
@@ -111,7 +111,7 @@ exports.listgoogle = (prefix) => {
 ├ • *${prefix}translate* [kode_negara] [text]
 ├ • *${prefix}gtts* [kode_negara] [text]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listinfomation = (prefix) => {
@@ -129,7 +129,7 @@ exports.listinfomation = (prefix) => {
 ├ • *${prefix}infogempa*
 ├ • *${prefix}lirik* [query]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listentertaiment = (prefix) => {
@@ -140,7 +140,7 @@ exports.listentertaiment = (prefix) => {
 ├ • *${prefix}tebakgambar*
 ├ • *${prefix}caklontong*
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listmedsos = (prefix) => {
@@ -151,7 +151,7 @@ exports.listmedsos = (prefix) => {
 ├ • *${prefix}githubstalk*
 ├ • *${prefix}ytstalk*
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listmetadata = (prefix) => {
@@ -163,7 +163,7 @@ exports.listmetadata = (prefix) => {
 ├ • *${prefix}bahasa / language*
 ├ • *${prefix}listblock*
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listcreator = (prefix) => {
@@ -175,7 +175,7 @@ exports.listcreator = (prefix) => {
 ├ • *${prefix}emoji* (emote to sticker)
 ├ • *${prefix}emojimix* (emote to sticker)
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listconvert = (prefix) => {
@@ -189,7 +189,7 @@ exports.listconvert = (prefix) => {
 ├ • *${prefix}towebp* (media to WebP)
 ├ • *${prefix}tourl* (media to URLs)
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listAdminGroup = (prefix) => {
@@ -211,7 +211,7 @@ exports.listAdminGroup = (prefix) => {
 ├ • *${prefix}setgrouppic* (send photo with caption)
 ├ • *${prefix}setgroupchange* (Open and Close)
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listgroup = (prefix) => {
@@ -224,7 +224,7 @@ exports.listgroup = (prefix) => {
 ├ • *${prefix}welcome* (for every the participant was added)
 ├ • *${prefix}antilink* (for a detection group link)
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listOwner = (prefix) => {
@@ -246,7 +246,7 @@ exports.listOwner = (prefix) => {
 ├ • *${prefix}addblock* [number or tag member]
 ├ • *${prefix}unblock* [number or tag member]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listprimbon = (prefix) => {
@@ -259,7 +259,7 @@ exports.listprimbon = (prefix) => {
 ├ • *${prefix}weton* [tanggal bulan tahun]
 ├ • *${prefix}jadian* [tanggal bulan tahun]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listtextpro = (prefix) => {
@@ -316,7 +316,7 @@ exports.listtextpro = (prefix) => {
 ├ • *${prefix}steel3d* [text1 & text2]
 ├ • *${prefix}wallgravity* [text1 & text2]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listphotoxy = (prefix) => {
@@ -347,7 +347,7 @@ exports.listphotoxy = (prefix) => {
 ├ • *${prefix}battlefield* [text1 & text2]
 ├ • *${prefix}pubg* [text1 & text2]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listephoto = (prefix) => {
@@ -385,7 +385,7 @@ exports.listephoto = (prefix) => {
 ├ • *${prefix}silverplaybutton* [text]
 ├ • *${prefix}freefire* [text]
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.listrandomimage = (prefix) => {
@@ -410,7 +410,7 @@ exports.listrandomimage = (prefix) => {
 ├ • *${prefix}feed*
 ├ • *${prefix}trap*
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.mysosmed = (prefix, owner, apiCakra) => {
@@ -424,7 +424,7 @@ exports.mysosmed = (prefix, owner, apiCakra) => {
 • *TeleBot :* https://t.me/Information341_bot
 • *Owner :* https://wa.me/${owner}
 
-「 CAKRA BOT 」
+「 R-BOT 」
 
 Don't forget to follow my instagram
 if donate, type *${prefix}donate*
@@ -450,7 +450,7 @@ Kartu operator By.U juga dapat mengirim/transfer pulsa dengan operator sesama de
 ├ • *Saweria :* https://saweria.co/cakrayp
 ├ • *Trakter :* https://trakteer.id/cakrayp
 │
-└──「 CAKRA BOT 」
+└──「 R-BOT 」
     `.trim()
 }
 exports.sourceCode = (prefix, ownerNumber, isIndonesian) => {
@@ -458,7 +458,7 @@ exports.sourceCode = (prefix, ownerNumber, isIndonesian) => {
         return `
 -----[ TERMS OF SERVICE ]-----
     
-Bot ini merupakan open-source bot dengan nama asli CAKRA BOT yang tersedia di GitHub secara gratis.
+Bot ini merupakan open-source bot dengan nama asli R-BOT yang tersedia di GitHub secara gratis.
 Owner/hoster dari bot ini terlepas dari tanggung jawab dan pengawasan developer (Cakra Yp).
 Owner/hoster boleh menjiplak, menambahkan, menghapus, mengganti source code dengan catatan *tidak memperjualbelikannya* dalam bentuk apapun.
 Apabila terjadi sebuah error, Silahkan ketik *${prefix}report* atau orang yang pertama yang harus kalian hubungi ialah owner/hoster.
@@ -481,13 +481,13 @@ Salam dari Cakrayp 😊
         return `
 -----[ TERMS OF SERVICE ]-----
     
-This bot is an open-source bot, come with the name of CAKRA BOT from indonesian, which is available on GitHub for free.
+This bot is an open-source bot, come with the name of R-BOT from indonesian, which is available on GitHub for free.
 The owner/hoster of this bot is independent from the responsibility and supervision of the developer (Cakra Yp).
 Owner/hoster may plagiarize, add, delete, replace source code with notes *DO NOT SELL* this source code in any form.
 If an error occurs, please type *${prefix}report* or the first person you should contact is the owner/hoster from indonesia.  
 
 If you want to contributing to this project, visit:
-https://github.com/cakrayp/whatsapp-cakrabot-md.git
+https://github.com/cakrayp/whatsapp-cakrabot-md
 
 Contact person:
 wa.me/${ownerNumber.replace('@c.us', '')} (Owner/hoster)
@@ -498,7 +498,7 @@ You guys can also support me to keep this bot up to date with:
 
 Thank you.
 
-- Cakrayp 😊
+- Rifat 😊
         `.trim()
     }
 }
