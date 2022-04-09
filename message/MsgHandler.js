@@ -58,7 +58,7 @@ let buttonSh = [{
                             }]            
 
 caption = `R-BOT`
-botgrup = `Ga ada`
+botgrup = `*>* https://chat.whatsapp.com/Ec7r8dxJV4FBHiZYWpb4iB \n*>* https://chat.whatsapp.com/DZf52GZI0yUA4izbhsjLqa \n*>* https://chat.whatsapp.com/KTm4p53s6457qcV5aDOAPI`
 // ------>  library  <------
 const { exit, stderr, stdout } = require("process")
 const { exec } = require('child_process')
@@ -112,6 +112,7 @@ const banned_ = JSON.parse(fs.readFileSync('./database/banned.json'))
 
 
 // Function command
+/*
 function prefix_command(chats) {
     function randomArr(arr) {   // (Random prefix if it use a "multi prefix")
         return arr[Math.floor(Math.random() * arr.length)]
@@ -123,6 +124,7 @@ function prefix_command(chats) {
     }
     return multi_prefix
 }
+*/
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -142,7 +144,7 @@ module.exports = async (rama, store, msg) => {
         const from = msg.key.remoteJid
         const type = Object.keys(msg.message)[0]
         const chats = (type === 'conversation' || type == 'senderKeyDistributionMessage' && msg.message.conversation) ? msg.message.conversation : (type == 'imageMessage') && msg.message.imageMessage.caption ? msg.message.imageMessage.caption : (type == 'documentMessage') && msg.message.documentMessage.caption ? msg.message.documentMessage.caption : (type == 'videoMessage') && msg.message.videoMessage.caption ? msg.message.videoMessage.caption : (type == 'extendedTextMessage') && msg.message.extendedTextMessage.text ? msg.message.extendedTextMessage.text : (type == 'buttonsResponseMessage' || type == 'messageContextInfo' && msg.message.buttonsResponseMessage.selectedButtonId) ? msg.message.buttonsResponseMessage.selectedButtonId : (type == 'templateButtonReplyMessage') && msg.message.templateButtonReplyMessage.selectedId ? msg.message.templateButtonReplyMessage.selectedId : (type === 'listResponseMessage' && msg.message.listResponseMessage.title) ? msg.message.listResponseMessage.title : ""
-        const prefix = prefix_command(chats)
+        var prefix = /^[°•π÷×¶∆£¢€¥®™✓_=|~!?#$%^&.+-,\/\\©^]/.test(chats) ? chats.match(/^[°•π÷×¶∆£¢€¥®™✓_=|~!?#$%^&.+-,\/\\©^]/gi) : '#'
         const cmd = (type === 'listResponseMessage' && msg.message.listResponseMessage.title) ? msg.message.listResponseMessage.title : (type === 'buttonsResponseMessage' && msg.message.buttonsResponseMessage.selectedButtonId) ? msg.message.buttonsResponseMessage.selectedButtonId : (type === 'conversation' && msg.message.conversation.startsWith(prefix)) ? msg.message.conversation : (type == 'imageMessage') && msg.message.imageMessage.caption.startsWith(prefix) ? msg.message.imageMessage.caption : (type == 'videoMessage') && msg.message.videoMessage.caption.startsWith(prefix) ? msg.message.videoMessage.caption : (type == 'extendedTextMessage') && msg.message.extendedTextMessage.text.startsWith(prefix) ? msg.message.extendedTextMessage.text : ""
         const command = chats.toLowerCase().slice(1).trim().split(/ +/).shift()
         const isCmd = chats.startsWith(prefix)
@@ -679,7 +681,7 @@ module.exports = async (rama, store, msg) => {
 ├• *Owner :* wa.me/${ownerNumber}
 ├• *Lib :* @adiwajshing/baileys-md
 │
-├• *Prefix :* \`\`\`"${multi ? '(multi)' : prefix}"\`\`\`
+├• *Prefix : *${prefix}*
 │
 ├─ *LIST MENU*
 ├• *${prefix}menuislamic*
@@ -1280,6 +1282,99 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     }
                 }
                 break
+case 'bcgc': case 'bcgroup': {
+                if (!isCreator) throw mess.owner
+                if (!text) throw `Text mana?\n\nExample : ${prefix + command} fatih-san`
+                let getGroups = await rama.groupFetchAllParticipating()
+                let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
+                let anu = groups.map(v => v.id)
+                reply(`Mengirim Broadcast Ke ${anu.length} Group Chat, Waktu Selesai ${anu.length * 1.5} detik`)
+                for (let i of anu) {
+                    await sleep(1500)
+                    let btnH =  [{
+                                urlButton: {
+                                    displayText: `JANGAN KLICK`,
+                                    url: `nekopoi.care`
+                                }
+                            },
+                            {
+                                quickReplyButton: {
+                                    displayText: 'COMMAND',
+                                    id: 'menu'
+                                }
+                            }]
+                      let txt = `「 BROADCAST 」\n\n${text}`
+                      send5ButImg(i, txt, rama.user.name, global.thumb, btnH)
+                    }
+                reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`)
+            }
+            break
+            /*
+            case 'bc': case 'broadcast': case 'bcall': {
+                if (!isCreator) throw mess.owner
+                if (!text) throw `Text mana?\n\nExample : ${prefix + command} fatih-san`
+                let anu = await store.chats.all().map(v => v.id)
+                reply(`Mengirim Broadcast Ke ${anu.length} Chat\nWaktu Selesai ${anu.length * 1.5} detik`)
+		for (let yoi of anu) {
+		    await sleep(1500)
+		    let btns = [{
+                                urlButton: {
+                                    displayText: `JANGAN KLICK`,
+                                    url: `nekopoi.care`
+                                }
+                            },
+                            {
+                                quickReplyButton: {
+                                    displayText: 'COMMAND',
+                                    id: 'menu'
+                                }
+                            }]
+                      let txt = `「 BROADCAST 」\n\n${text}`
+                      send5ButImg(yoi, txt, rama.user.name, global.thumb, btns)
+		}
+		reply('Sukses Broadcast')
+            }
+            break
+            */
+case 'bcimg': case 'bcvidio': case 'bcaudio': {
+                if (!isCreator) throw mess.owner
+                if (!/video/.test(mime) && !/image/.test(mime) && !/audio/.test(mime)) throw `Kirim/Reply Video/Audio/Image Yang Ingin Di Broadcast Dengan Caption ${prefix + command}`
+                let anu = await store.chats.all().map(v => v.id)
+                reply(`Mengirim Broadcast Ke ${anu.length} Group Chat, Waktu Selesai ${anu.length * 1.5} detik`)
+                for (let i of anu) {
+                    await sleep(1500)
+                    let butoon = [{
+                                urlButton: {
+                                    displayText: `TES`,
+                                    url: `nekopoi.care`
+                                }
+                            },
+                            {
+                                quickReplyButton: {
+                                    displayText: 'COMMAND',
+                                    id: 'menu'
+                                }
+                            }]
+                    let media = await rama.downloadAndSaveMediaMessage(quoted)
+                    let buffer = fs.readFileSync(media)
+                    if (/webp/.test(mime)) {
+                    rama.sendMessage(i, { sticker: { url: media } }, { quoted: fkontak })
+                    } else if (/image/.test(mime)) {
+                    let junn = `*_BROADCAST IMAGE_*${text ? '\n\n' + text : ''}`
+                    send5ButImg(i, junn, `${namabott}`, buffer, butoon)
+                    } else if (/video/.test(mime)) {
+                    let junn = `*_BROADCAST VIDIO_*${text ? '\n\n' + text : ''}`
+                    rama.send5Vid(i, junn, `${namabott}`, buffer, butoon)
+                    } else if (/audio/.test(mime)) {
+                    rama.sendMessage(i, {audio: buffer, mimetype: 'audio/mpeg'}, { quoted : fvn })
+                    } else {
+                    reply(`Kirim/Reply Video/Audio/Image Yang Ingin Di Broadcast Dengan Caption ${prefix + command}`)
+                    }
+                    await fs.unlinkSync(media)
+                    }
+                reply(`Sukses Mengirim Broadcast Ke ${anu.length} Chats`)
+            }
+            break
             case 'otagall':
                 if (!isGroup) return reply(commannd_response('groupOnly'))
                 if (!isOwner) return reply(commannd_response('admin_owner'))
@@ -2522,7 +2617,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                     .then(async ({ sticker }) => {
                         stickerInfo = {
                             "author": Bot_Name,
-                            "pack": command
+                            "pack": `im'fine RamaGans`
                         }
                         const makeSticker = new Sticker(randomArr(sticker), {
                             pack: stickerInfo.pack,         // The pack name
