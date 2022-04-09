@@ -150,6 +150,7 @@ module.exports = async (rama, store, msg) => {
         const isCmd = chats.startsWith(prefix)
         const args = chats.trim().split(/ +/).slice(1)
         const messagesText = args.join(' ')
+        const text = q = args.join(" ")
         const pushname = msg.pushName;
         const isGroup = msg.key.remoteJid.endsWith('@g.us')
         const sender = isGroup ? (msg.key.participant ? msg.key.participant : msg.participant) : msg.key.remoteJid
