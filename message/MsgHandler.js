@@ -244,6 +244,12 @@ module.exports = async (rama, store, msg) => {
                     .catch(reject)
             })
         }
+        let buts = [{                              
+                                quickReplyButton: {
+                                    displayText: 'How To use',
+                                    id: `/helpbot ${command}`
+                                }                                                 
+                            }]         
    const send5ButImg = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
         let message = await prepareWAMessageMedia({ image: img }, { upload: rama.waUploadToServer })
         var template = generateWAMessageFromContent(from, proto.Message.fromObject({
@@ -963,60 +969,60 @@ break
             case 'allmenu':
                 send5ButImg(from, allmenu(pushname, isIndonesian, language, Clockset.swichtime(moment(new Date()).format('HH')), time, prefix), `${caption}`, botProfile, buttonSh)                  
                 break
-            case 'menuislamic':
-                send5ButImg(from, helpmenu.listislami(prefix), `${caption}`, botProfile, buttonSh)                    
+            case 'menuislamic':                   
+                send5ButImg(from, helpmenu.listislami(prefix), `${caption}`, botProfile, buts)                    
                 break
             case 'menuadmin':
-                send5ButImg(from, helpmenu.listAdminGroup(prefix), `${caption}`, botProfile, buttonSh)                                
+                send5ButImg(from, helpmenu.listAdminGroup(prefix), `${caption}`, botProfile, buts)                                
                 break
             case 'menudownloader':
-                send5ButImg(from, helpmenu.listdownloader(prefix), `${caption}`, botProfile, buttonSh)                                
+                send5ButImg(from, helpmenu.listdownloader(prefix), `${caption}`, botProfile, buts)                                
                 break
             case 'menuconverter':
-                send5ButImg(from, helpmenu.listconvert(prefix), `${caption}`, botProfile, buttonSh)             
+                send5ButImg(from, helpmenu.listconvert(prefix), `${caption}`, botProfile, buts)             
                 break
             case 'menusearching':
-                send5ButImg(from, helpmenu.listsearch(prefix), `${caption}`, botProfile, buttonSh)               
+                send5ButImg(from, helpmenu.listsearch(prefix), `${caption}`, botProfile, buts)               
                 break
             case 'menurandomtext':
-                send5ButImg(from, helpmenu.listrandom(prefix), `${caption}`, botProfile, buttonSh)                     
+                send5ButImg(from, helpmenu.listrandom(prefix), `${caption}`, botProfile, buts)                     
                 break
             case 'menuanime':
-                send5ButImg(from, helpmenu.listmanga(prefix), `${caption}`, botProfile, buttonSh)                     
+                send5ButImg(from, helpmenu.listmanga(prefix), `${caption}`, botProfile, buts)                     
                 break
             case 'menumedia':
-                send5ButImg(from, helpmenu.listmedsos(prefix), `${caption}`, botProfile, buttonSh)                     
+                send5ButImg(from, helpmenu.listmedsos(prefix), `${caption}`, botProfile, buts)                     
                 break
             case 'menuinformasi':
             case 'menuinformation':                
-                send5ButImg(from, helpmenu.listinfomation(prefix), `${caption}`, botProfile, buttonSh)                     
+                send5ButImg(from, helpmenu.listinfomation(prefix), `${caption}`, botProfile, buts)                     
                 break
             case 'menuentertaiment':
-                send5ButImg(from, helpmenu.listentertaiment(prefix), `${caption}`, botProfile, buttonSh)                      
+                send5ButImg(from, helpmenu.listentertaiment(prefix), `${caption}`, botProfile, buts)                      
                 break
             case 'menucreator':
-                send5ButImg(from, helpmenu.listcreator(prefix), `${caption}`, botProfile, buttonSh)                     
+                send5ButImg(from, helpmenu.listcreator(prefix), `${caption}`, botProfile, buts)                     
                 break
             case 'menugoogle':
-                send5ButImg(from, helpmenu.listgoogle(prefix), `${caption}`, botProfile, buttonSh)                      
+                send5ButImg(from, helpmenu.listgoogle(prefix), `${caption}`, botProfile, buts)                      
                 break
             case 'menuprimbon':
-                send5ButImg(from, helpmenu.listprimbon(prefix), `${caption}`, botProfile, buttonSh)                      
+                send5ButImg(from, helpmenu.listprimbon(prefix), `${caption}`, botProfile, buts)                      
                 break
             case 'menutextpro':
-                send5ButImg(from, helpmenu.listtextpro(prefix), `${caption}`, botProfile, buttonSh)                     
+                send5ButImg(from, helpmenu.listtextpro(prefix), `${caption}`, botProfile, buts)                     
                 break
             case 'menuphotoxy':
-                send5ButImg(from, helpmenu.listphotoxy(prefix), `${caption}`, botProfile, buttonSh)
+                send5ButImg(from, helpmenu.listphotoxy(prefix), `${caption}`, botProfile, buts)
                 break
             case 'menurandomimg':
-                send5ButImg(from, helpmenu.listrandomimage(prefix), `${caption}`, botProfile, buttonSh)
+                send5ButImg(from, helpmenu.listrandomimage(prefix), `${caption}`, botProfile, buts)
                 break
             case 'menugroup':
-                send5ButImg(from, helpmenu.listgroup(prefix), `${caption}`, botProfile, buttonSh)                    
+                send5ButImg(from, helpmenu.listgroup(prefix), `${caption}`, botProfile, buts)                    
                 break
              case 'menuowner':
-                send5ButImg(from, helpmenu.listOwner(prefix), `${caption}`, botProfile, buttonSh)                    
+                send5ButImg(from, helpmenu.listOwner(prefix), `${caption}`, botProfile, buts)                    
                 break
             case 'linkbotgc':
                 linknya = `${botgrup}`
@@ -1283,7 +1289,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 }
                 break
 case 'bcgc': case 'bcgroup': {
-                if (!isCreator) throw mess.owner
+                if (!isOwner) return reply(commannd_response('owner_bot'))
                 if (!text) throw `Text mana?\n\nExample : ${prefix + command} fatih-san`
                 let getGroups = await rama.groupFetchAllParticipating()
                 let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
@@ -1337,7 +1343,7 @@ case 'bcgc': case 'bcgroup': {
             break
             */
 case 'bcimg': case 'bcvidio': case 'bcaudio': {
-                if (!isCreator) throw mess.owner
+                if (!isOwner) return reply(commannd_response('owner_bot'))
                 if (!/video/.test(mime) && !/image/.test(mime) && !/audio/.test(mime)) throw `Kirim/Reply Video/Audio/Image Yang Ingin Di Broadcast Dengan Caption ${prefix + command}`
                 let anu = await store.chats.all().map(v => v.id)
                 reply(`Mengirim Broadcast Ke ${anu.length} Group Chat, Waktu Selesai ${anu.length * 1.5} detik`)
@@ -1366,7 +1372,7 @@ case 'bcimg': case 'bcvidio': case 'bcaudio': {
                     let junn = `*_BROADCAST VIDIO_*${text ? '\n\n' + text : ''}`
                     rama.send5Vid(i, junn, `${namabott}`, buffer, butoon)
                     } else if (/audio/.test(mime)) {
-                    rama.sendMessage(i, {audio: buffer, mimetype: 'audio/mpeg'}, { quoted : fvn })
+                    rama.sendMessage(i, {audio: buffer, mimetype: 'audio/mpeg'}, { quoted : msg })
                     } else {
                     reply(`Kirim/Reply Video/Audio/Image Yang Ingin Di Broadcast Dengan Caption ${prefix + command}`)
                     }
