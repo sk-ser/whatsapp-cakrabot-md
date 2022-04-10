@@ -145,6 +145,7 @@ module.exports = async (rama, store, msg) => {
         const type = Object.keys(msg.message)[0]
         const chats = (type === 'conversation' || type == 'senderKeyDistributionMessage' && msg.message.conversation) ? msg.message.conversation : (type == 'imageMessage') && msg.message.imageMessage.caption ? msg.message.imageMessage.caption : (type == 'documentMessage') && msg.message.documentMessage.caption ? msg.message.documentMessage.caption : (type == 'videoMessage') && msg.message.videoMessage.caption ? msg.message.videoMessage.caption : (type == 'extendedTextMessage') && msg.message.extendedTextMessage.text ? msg.message.extendedTextMessage.text : (type == 'buttonsResponseMessage' || type == 'messageContextInfo' && msg.message.buttonsResponseMessage.selectedButtonId) ? msg.message.buttonsResponseMessage.selectedButtonId : (type == 'templateButtonReplyMessage') && msg.message.templateButtonReplyMessage.selectedId ? msg.message.templateButtonReplyMessage.selectedId : (type === 'listResponseMessage' && msg.message.listResponseMessage.title) ? msg.message.listResponseMessage.title : ""
         var prefix = /^[°•π÷×¶∆£¢€¥®™✓_=|~!?#$%^&.+-,\/\\©^]/.test(chats) ? chats.match(/^[°•π÷×¶∆£¢€¥®™✓_=|~!?#$%^&.+-,\/\\©^]/gi) : '#'
+        var budy = (typeof msg.text == 'string' ? msg.text : '')      
         const cmd = (type === 'listResponseMessage' && msg.message.listResponseMessage.title) ? msg.message.listResponseMessage.title : (type === 'buttonsResponseMessage' && msg.message.buttonsResponseMessage.selectedButtonId) ? msg.message.buttonsResponseMessage.selectedButtonId : (type === 'conversation' && msg.message.conversation.startsWith(prefix)) ? msg.message.conversation : (type == 'imageMessage') && msg.message.imageMessage.caption.startsWith(prefix) ? msg.message.imageMessage.caption : (type == 'videoMessage') && msg.message.videoMessage.caption.startsWith(prefix) ? msg.message.videoMessage.caption : (type == 'extendedTextMessage') && msg.message.extendedTextMessage.text.startsWith(prefix) ? msg.message.extendedTextMessage.text : ""
         const command = chats.toLowerCase().slice(1).trim().split(/ +/).shift()
         const isCmd = chats.startsWith(prefix)
@@ -255,7 +256,7 @@ module.exports = async (rama, store, msg) => {
                                 }                                                 
                             }]           
 const replyY = (teks) => {
-			hisoka.sendMessage(from, teks, text, { thumbnail: botProfile, sendEphemeral: true, quoted: msg, contextInfo: { forwardingScore: 508, isForwarded: true, externalAdReply:{title: `Test`,body:"DON'T CLICK HERE",previewType:"PHOTO",thumbnail:botProfile,sourceUrl:`https://wa.me/message/SQK64PRUWO5FH1`}}})
+			rama.sendMessage(from, teks, text, { thumbnail: botProfile, sendEphemeral: true, quoted: msg, contextInfo: { forwardingScore: 508, isForwarded: true, externalAdReply:{title: `Test`,body:"DON'T CLICK HERE",previewType:"PHOTO",thumbnail:botProfile,sourceUrl:`https://wa.me/message/SQK64PRUWO5FH1`}}})
 		}                           
    const send5ButImg = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
         let message = await prepareWAMessageMedia({ image: img }, { upload: rama.waUploadToServer })
@@ -4473,6 +4474,7 @@ rama.sendMessage(from, { audio: { url: `https://a.uguu.se/eJjohSmU.mp3` }, mimet
                 if (isCmd && command) {
                     return reply(language_text(`Hi *${pushname}* mohon maaf, perintah *${prefix + command}* tidak ada didalam list *${prefix}menu*`, `Hi *${pushname}*, Sorry, this command is not avaiable in the list *${prefix}menu*`))
                 }
+                /*
                 if (!isGroup && !msg.key.fromMe) {
                     const salam = moment(new Date(msg.messageTimestamp * 1000)).format('HH')
                     return reply(
@@ -4482,7 +4484,7 @@ rama.sendMessage(from, { audio: { url: `https://a.uguu.se/eJjohSmU.mp3` }, mimet
                         )
                     )
                 }
-                break;
+                break;*/
         }
 
     } catch (err) {
