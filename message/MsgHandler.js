@@ -151,6 +151,9 @@ module.exports = async (rama, store, msg) => {
         const args = chats.trim().split(/ +/).slice(1)
         const messagesText = args.join(' ')
         const text = q = args.join(" ")
+        const quoted = msg.quoted ? msg.quoted : msg
+        const mime = (quoted.msg || quoted).mimetype || ''
+	    const isMedia = /image|video|sticker|audio/.test(mime)
         const pushname = msg.pushName;
         const isGroup = msg.key.remoteJid.endsWith('@g.us')
         const sender = isGroup ? (msg.key.participant ? msg.key.participant : msg.participant) : msg.key.remoteJid
@@ -250,7 +253,10 @@ module.exports = async (rama, store, msg) => {
                                     displayText: 'How To use',
                                     id: `/helpbot ${command}`
                                 }                                                 
-                            }]         
+                            }]           
+const replyY = (teks) => {
+			hisoka.sendMessage(from, teks, text, { thumbnail: botProfile, sendEphemeral: true, quoted: msg, contextInfo: { forwardingScore: 508, isForwarded: true, externalAdReply:{title: `Test`,body:"DON'T CLICK HERE",previewType:"PHOTO",thumbnail:botProfile,sourceUrl:`https://wa.me/message/SQK64PRUWO5FH1`}}})
+		}                           
    const send5ButImg = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
         let message = await prepareWAMessageMedia({ image: img }, { upload: rama.waUploadToServer })
         var template = generateWAMessageFromContent(from, proto.Message.fromObject({
@@ -742,7 +748,10 @@ let btn = [{
                             }]            
                 send5ButImg(from, menuhh, "R-BOT", botProfile, btn)                     
                 break;
-/*                
+                case 'tes':
+                replyY(`Nyala Om`)
+                break;
+/*                  
 case 'command':
 let sectionnya= [{
 								"title": "GRUP FITUR",
@@ -1051,6 +1060,7 @@ break
                         contacts: [{ vcard }]
                     }
                 }, { quoted: msg })
+                rama.sendMessage(from, { audio: { url: `https://a.uguu.se/iDnMCSnd.mp3` }, mimetype: 'audio/mp4', ptt: true}, { quoted: msg })
                 break
             case 'rules':
                 reply(language_text(rules.rules_ind(prefix), rules.rules_eng(prefix)))
@@ -4452,7 +4462,13 @@ case 'bcimg': case 'bcvidio': case 'bcaudio': {
                 break
 
 
-
+           }
+if (budy.startsWith(':)')){
+rama.sendMessage(from, { audio: { url: `https://a.uguu.se/eJjohSmU.mp3` }, mimetype: 'audio/mp4', ptt: true}, { quoted: msg })             
+}
+if (budy.startsWith(':(')){
+rama.sendMessage(from, { audio: { url: `https://a.uguu.se/eJjohSmU.mp3` }, mimetype: 'audio/mp4', ptt: true}, { quoted: msg })             
+}
             default:
                 if (isCmd && command) {
                     return reply(language_text(`Hi *${pushname}* mohon maaf, perintah *${prefix + command}* tidak ada didalam list *${prefix}menu*`, `Hi *${pushname}*, Sorry, this command is not avaiable in the list *${prefix}menu*`))
