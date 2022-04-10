@@ -4462,7 +4462,7 @@ case 'bcimg': case 'bcvidio': case 'bcaudio': {
                 break
 
 
-           }
+           
 if (budy.startsWith(':)')){
 rama.sendMessage(from, { audio: { url: `https://a.uguu.se/eJjohSmU.mp3` }, mimetype: 'audio/mp4', ptt: true}, { quoted: msg })             
 }
