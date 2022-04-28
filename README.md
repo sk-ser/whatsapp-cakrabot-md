@@ -26,6 +26,19 @@ settings your whatsapp bots in file ./settings.js
 1. true = (active/right)
 2. false = (nonactive)
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rasssya76/whatsapp-cakrabot-md)
+
+## BUILD PACKS
+
+```
+https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest
+
+https://github.com/DuckyTeam/heroku-buildpack-imagemagick
+
+
+https://github.com/clhuang/heroku-buildpack-webp-binaries.git
+
+```
 ### Settings your bot custom
 
 1. ownerNumber = (Enter your phone number Owner)
